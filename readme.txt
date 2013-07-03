@@ -3,19 +3,19 @@ ACTIVITI-DEMO README
 http://www.mossle.org
 
 
-»·¾³
+çŽ¯å¢ƒ
 --------------------------------------
 
-* °²×°JDK6
-* °²×°Maven3
+* å®‰è£…JDK6
+* å®‰è£…Maven3
 
-Æô¶¯
+å¯åŠ¨
 --------------------------------------
 
-* Ö´ÐÐreset.bat³õÊ¼»¯Êý¾Ý¿â
-* Ö´ÐÐstart.batÆô¶¯Ó¦ÓÃ
+* æ‰§è¡Œreset.batåˆå§‹åŒ–æ•°æ®åº“
+* æ‰§è¡Œstart.batå¯åŠ¨åº”ç”¨
 
-Ê¹ÓÃ
+ä½¿ç”¨
 --------------------------------------
-* ·ÃÎÊhttp://localhost:8080/activiti-demo
-* µã»÷¡°Ê×Ò³¡±->¡°Æô¶¯Á÷³Ì¡±¿ªÊ¼ÌåÑé
+* è®¿é—®http://localhost:8080/activiti-demo
+* ç‚¹å‡»â€œé¦–é¡µâ€->â€œå¯åŠ¨æµç¨‹â€å¼€å§‹ä½“éªŒ

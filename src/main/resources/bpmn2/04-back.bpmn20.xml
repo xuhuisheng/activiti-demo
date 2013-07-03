@@ -1,0 +1,63 @@
+<definitions
+  xmlns='http://www.omg.org/spec/BPMN/20100524/MODEL'
+  xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'
+  xmlns:activiti='http://activiti.org/bpmn'
+  xmlns:bpmndi='http://www.omg.org/spec/BPMN/20100524/DI'
+  xmlns:omgdc='http://www.omg.org/spec/DD/20100524/DC'
+  xmlns:omgdi='http://www.omg.org/spec/DD/20100524/DI'
+  typeLanguage='http://www.w3.org/2001/XMLSchema'
+  expressionLanguage='http://www.w3.org/1999/XPath'
+  targetNamespace='http://www.mossle.com'>
+<process id='back' name='回退'>
+  <startEvent id='startnone-1' name='startnone-1' activiti:initiator='initiator'/>
+  <sequenceFlow id='transition-1' sourceRef='startnone-1' targetRef='taskuser-1'/>
+  <userTask id='taskuser-1' name='指派任务'>
+    <extensionElements>
+      <activiti:formProperty id='taskAssignee' name='任务处理人' type='string' required='true'/>
+    </extensionElements>
+    <potentialOwner>
+      <resourceAssignmentExpression>
+        <formalExpression>user(user),user(admin)</formalExpression>
+      </resourceAssignmentExpression>
+    </potentialOwner>
+  </userTask>
+  <sequenceFlow id='transition-3' sourceRef='taskuser-1' targetRef='taskuser-2'/>
+  <userTask id='taskuser-2' name='处理任务'>
+    <humanPerformer>
+      <resourceAssignmentExpression>
+        <formalExpression>${taskAssignee}</formalExpression>
+      </resourceAssignmentExpression>
+    </humanPerformer>
+  </userTask>
+  <sequenceFlow id='transition-4' sourceRef='taskuser-2' targetRef='endnone-2'/>
+  <endEvent id='endnone-2' name='endnone-2'/>
+</process>
+<bpmndi:BPMNDiagram id='BPMNDiagram_back'>
+  <bpmndi:BPMNPlane bpmnElement='back' id='BPMNPlane_back'>
+    <bpmndi:BPMNShape bpmnElement='startnone-1' id='BPMNShape_startnone-1'>
+      <omgdc:Bounds height='40' width='40' x='15' y='35'/>
+    </bpmndi:BPMNShape>
+    <bpmndi:BPMNShape bpmnElement='taskuser-1' id='BPMNShape_taskuser-1'>
+      <omgdc:Bounds height='80' width='120' x='85' y='14'/>
+    </bpmndi:BPMNShape>
+    <bpmndi:BPMNShape bpmnElement='taskuser-2' id='BPMNShape_taskuser-2'>
+      <omgdc:Bounds height='80' width='120' x='235' y='15'/>
+    </bpmndi:BPMNShape>
+    <bpmndi:BPMNShape bpmnElement='endnone-2' id='BPMNShape_endnone-2'>
+      <omgdc:Bounds height='40' width='40' x='385' y='35'/>
+    </bpmndi:BPMNShape>
+    <bpmndi:BPMNEdge bpmnElement='transition-1' id='BPMNShape_transition-1'>
+      <omgdi:waypoint x='55' y='54'/>
+      <omgdi:waypoint x='85' y='54'/>
+    </bpmndi:BPMNEdge>
+    <bpmndi:BPMNEdge bpmnElement='transition-3' id='BPMNShape_transition-3'>
+      <omgdi:waypoint x='205' y='54'/>
+      <omgdi:waypoint x='235' y='54'/>
+    </bpmndi:BPMNEdge>
+    <bpmndi:BPMNEdge bpmnElement='transition-4' id='BPMNShape_transition-4'>
+      <omgdi:waypoint x='355' y='55'/>
+      <omgdi:waypoint x='385' y='55'/>
+    </bpmndi:BPMNEdge>
+  </bpmndi:BPMNPlane>
+</bpmndi:BPMNDiagram>
+</definitions>

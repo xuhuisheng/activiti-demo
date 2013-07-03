@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>com.webapp</groupId>
+  <artifactId>hibernate-tool</artifactId>
+  <version>1.0</version>
+  <packaging>jar</packaging>
+  <name>hibernate-tool</name>
+  <description>hibernate tools need this.</description>
+
+  <build>
+    <defaultGoal>hibernate3:hbm2java</defaultGoal>
+    <plugins>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>hibernate3-maven-plugin</artifactId>
+        <version>3.0</version>
+        <configuration>
+          <hibernatetool templatepath="src/templates">
+            <jdbcconfiguration configurationfile="src/hibernate.cfg.xml"
+                               packagename="domain"
+                               revengfile="src/hibernate.reveng.xml"
+                               detectmanytomany="true"/>
+            <hbm2java jdk5="true" ejb3="true"/>
+          </hibernatetool>
+        </configuration>
+        <dependencies>
+          <dependency>
+            <groupId>org.hsqldb</groupId>
+            <artifactId>hsqldb</artifactId>
+			<version>${hsqldb.version}</version>
+          </dependency>
+          <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-tools</artifactId>
+            <version>3.2.4.CR1-20100826</version>
+          </dependency>
+          <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-core</artifactId>
+            <version>3.3.2.GA</version>
+          </dependency>
+          <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-annotations</artifactId>
+            <version>3.4.0.GA</version>
+          </dependency>
+          <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-simple</artifactId>
+            <version>1.5.6</version>
+          </dependency>
+          <dependency>
+            <groupId>cglib</groupId>
+            <artifactId>cglib-nodep</artifactId>
+            <version>2.2.2</version>
+          </dependency>
+        </dependencies>
+      </plugin>
+    </plugins>
+  </build>
+
+  <properties>
+    <java.version>1.5</java.version>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+	<hsqldb.version>2.2.9</hsqldb.version>
+  </properties>
+</project>

@@ -1,0 +1,82 @@
+<definitions
+  xmlns='http://www.omg.org/spec/BPMN/20100524/MODEL'
+  xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'
+  xmlns:activiti='http://activiti.org/bpmn'
+  xmlns:bpmndi='http://www.omg.org/spec/BPMN/20100524/DI'
+  xmlns:omgdc='http://www.omg.org/spec/DD/20100524/DC'
+  xmlns:omgdi='http://www.omg.org/spec/DD/20100524/DI'
+  typeLanguage='http://www.w3.org/2001/XMLSchema'
+  expressionLanguage='http://www.w3.org/1999/XPath'
+  targetNamespace='http://www.mossle.com'>
+<process id='approval' name='审批'>
+  <startEvent id='startnone-3' name='startnone-3' activiti:initiator='initiator'>
+    <extensionElements>
+    <activiti:formProperty id='title' name='标题' required='true' type='string'/>
+    <activiti:formProperty id='content' name='内容' required='true' type='string'/>
+    </extensionElements>
+  </startEvent>
+  <sequenceFlow id='transition-6' sourceRef='startnone-3' targetRef='taskuser-1'/>
+  <userTask id='taskuser-1' name='审批'>
+    <extensionElements>
+    <activiti:formProperty id='title' name='标题' required='false' type='string' writable='false'/>
+    <activiti:formProperty id='content' name='内容' required='false' type='string' writable='false'/>
+    <activiti:formProperty id='comment' name='意见' required='true' type='enum' writable='true'>
+    <activiti:value id='true' name='同意'/>
+    <activiti:value id='false' name='不同意'/>
+    </activiti:formProperty>
+    </extensionElements>
+    <humanPerformer>
+    <resourceAssignmentExpression>
+    <formalExpression>admin</formalExpression>
+    </resourceAssignmentExpression>
+    </humanPerformer>
+  </userTask>
+  <sequenceFlow id='transition-7' sourceRef='taskuser-1' targetRef='exclusive-2'/>
+  <exclusiveGateway id='exclusive-2' name='exclusive-2'/>
+  <sequenceFlow name='同意' id='transition-8' sourceRef='exclusive-2' targetRef='endnone-5'>
+    <conditionExpression xsi:type='tFormalExpression'>${comment == 'true'}</conditionExpression>
+  </sequenceFlow>
+  <sequenceFlow id='transition-9' name='不同意' sourceRef='exclusive-2' targetRef='endnone-6'>
+    <conditionExpression xsi:type='tFormalExpression'>${comment == 'false'}</conditionExpression>
+  </sequenceFlow>
+  <endEvent id='endnone-5' name='endnone-5'/>
+  <endEvent id='endnone-6' name='endnone-6'/>
+</process>
+<bpmndi:BPMNDiagram id='BPMNDiagram_approval'>
+  <bpmndi:BPMNPlane bpmnElement='approval' id='BPMNPlane_approval'>
+    <bpmndi:BPMNShape bpmnElement='startnone-3' id='BPMNShape_startnone-3'>
+      <omgdc:Bounds height='40' width='40' x='15' y='105'/>
+    </bpmndi:BPMNShape>
+    <bpmndi:BPMNShape bpmnElement='taskuser-1' id='BPMNShape_taskuser-1'>
+      <omgdc:Bounds height='80' width='120' x='85' y='85'/>
+    </bpmndi:BPMNShape>
+    <bpmndi:BPMNShape bpmnElement='exclusive-2' id='BPMNShape_exclusive-2'>
+      <omgdc:Bounds height='40' width='40' x='235' y='105'/>
+    </bpmndi:BPMNShape>
+    <bpmndi:BPMNShape bpmnElement='endnone-5' id='BPMNShape_endnone-5'>
+      <omgdc:Bounds height='40' width='40' x='305' y='15'/>
+    </bpmndi:BPMNShape>
+    <bpmndi:BPMNShape bpmnElement='endnone-6' id='BPMNShape_endnone-6'>
+      <omgdc:Bounds height='40' width='40' x='305' y='195'/>
+    </bpmndi:BPMNShape>
+    <bpmndi:BPMNEdge bpmnElement='transition-6' id='BPMNShape_transition-6'>
+      <omgdi:waypoint x='55' y='125'/>
+      <omgdi:waypoint x='85' y='125'/>
+    </bpmndi:BPMNEdge>
+    <bpmndi:BPMNEdge bpmnElement='transition-7' id='BPMNShape_transition-7'>
+      <omgdi:waypoint x='205' y='125'/>
+      <omgdi:waypoint x='235' y='125'/>
+    </bpmndi:BPMNEdge>
+    <bpmndi:BPMNEdge bpmnElement='transition-8' id='BPMNShape_transition-8'>
+      <omgdi:waypoint x='255' y='105'/>
+      <omgdi:waypoint x='255' y='35'/>
+      <omgdi:waypoint x='305' y='35'/>
+    </bpmndi:BPMNEdge>
+    <bpmndi:BPMNEdge bpmnElement='transition-9' id='BPMNShape_transition-9'>
+      <omgdi:waypoint x='255' y='145'/>
+      <omgdi:waypoint x='255' y='215'/>
+      <omgdi:waypoint x='305' y='215'/>
+    </bpmndi:BPMNEdge>
+  </bpmndi:BPMNPlane>
+</bpmndi:BPMNDiagram>
+</definitions>

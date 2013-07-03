@@ -1,0 +1,65 @@
+<definitions
+  xmlns='http://www.omg.org/spec/BPMN/20100524/MODEL'
+  xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'
+  xmlns:activiti='http://activiti.org/bpmn'
+  xmlns:bpmndi='http://www.omg.org/spec/BPMN/20100524/DI'
+  xmlns:omgdc='http://www.omg.org/spec/DD/20100524/DC'
+  xmlns:omgdi='http://www.omg.org/spec/DD/20100524/DI'
+  typeLanguage='http://www.w3.org/2001/XMLSchema'
+  expressionLanguage='http://www.w3.org/1999/XPath'
+  targetNamespace='http://www.mossle.com'>
+<process id='countersign' name='会签'>
+  <startEvent id='startnone-1' name='startnone-1' activiti:initiator='initiator'>
+    <extensionElements>
+      <activiti:formProperty id="rate" name="投票比例" type="enum" required="true">
+        <activiti:value id="100" name="100%"/>
+        <activiti:value id="70" name="70%"/>
+        <activiti:value id="50" name="50%"/>
+      </activiti:formProperty>
+      <activiti:formProperty id="countersignUsers" name="会签参与人" type="users" required="true"/>
+    </extensionElements>
+  </startEvent>
+  <sequenceFlow id='transition-1' sourceRef='startnone-1' targetRef='taskuser-1'/>
+  <userTask id='taskuser-1' name='会签'>
+    <humanPerformer>
+      <resourceAssignmentExpression>
+        <formalExpression>${countersignUser}</formalExpression>
+      </resourceAssignmentExpression>
+    </humanPerformer>
+    <multiInstanceLoopCharacteristics isSequential="false" activiti:collection="${countersignUsers}" activiti:elementVariable="countersignUser">
+      <completionCondition>
+	    ${counterSignService.canComplete(
+			execution,
+			rate,
+			nrOfInstances,
+			nrOfActiveInstances,
+			nrOfCompletedInstances,
+			loopCounter)}
+	  </completionCondition>
+    </multiInstanceLoopCharacteristics>
+  </userTask>
+  <sequenceFlow id='transition-2' sourceRef='taskuser-1' targetRef='endnone-1'/>
+  <endEvent id='endnone-1' name='endnone-1'/>
+</process>
+<bpmndi:BPMNDiagram id='BPMNDiagram_hello'>
+  <bpmndi:BPMNPlane bpmnElement='hello' id='BPMNPlane_hello'>
+    <bpmndi:BPMNShape bpmnElement='startnone-1' id='BPMNShape_startnone-1'>
+      <omgdc:Bounds height='40' width='40' x='15' y='35'/>
+    </bpmndi:BPMNShape>
+    <bpmndi:BPMNShape bpmnElement='taskuser-1' id='BPMNShape_taskuser-1'>
+      <omgdc:Bounds height='80' width='120' x='85' y='15'/>
+    </bpmndi:BPMNShape>
+    <bpmndi:BPMNShape bpmnElement='endnone-1' id='BPMNShape_endnone-1'>
+      <omgdc:Bounds height='40' width='40' x='235' y='35'/>
+    </bpmndi:BPMNShape>
+    <bpmndi:BPMNEdge bpmnElement='transition-1' id='BPMNShape_transition-1'>
+      <omgdi:waypoint x='55' y='55'/>
+      <omgdi:waypoint x='85' y='55'/>
+    </bpmndi:BPMNEdge>
+    <bpmndi:BPMNEdge bpmnElement='transition-2' id='BPMNShape_transition-2'>
+      <omgdi:waypoint x='205' y='55'/>
+      <omgdi:waypoint x='235' y='55'/>
+    </bpmndi:BPMNEdge>
+  </bpmndi:BPMNPlane>
+</bpmndi:BPMNDiagram>
+</definitions>

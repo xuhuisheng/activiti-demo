@@ -1,6 +1,6 @@
 ACTIVITI-DEMO README
 =====================
-http://www.mossle.org
+http://www.mossle.com
 
 
 环境

@@ -6,4 +6,4 @@ http://www.mossle.org
 Changes in version 1.0.0-SNAPSHOT (2013-00-00)
 --------------------------------------
 
-* activiti流程基本功能
+* activiti娴佺▼鍩烘湰鍔熻兘

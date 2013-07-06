@@ -1,0 +1,4 @@
+/target/
+/db.properties
+/db.script
+/webapp/WEB-INF/classes/

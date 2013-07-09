@@ -32,6 +32,8 @@
                 <ul class="dropdown-menu">
                   <li><a href="${scopePrefix}/index.jsp?username=admin">切换用户admin</a></li>
                   <li><a href="${scopePrefix}/index.jsp?username=user">切换用户user</a></li>
+                  <li><a href="${scopePrefix}/index.jsp?username=hruser">切换用户hruser</a></li>
+                  <li><a href="${scopePrefix}/index.jsp?username=leaduser">切换用户leaduser</a></li>
                 </ul>
               </li>
             </ul>

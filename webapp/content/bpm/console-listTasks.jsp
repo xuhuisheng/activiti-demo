@@ -59,7 +59,7 @@
 		  <s:else>
           <a href="workspace!resolveTask.do?taskId=${item.id}">处理</a>
 		  </s:else>
-          <a href="workspace!viewHistory.do?processInstanceId=${item.executionId}">历史</a>
+          <a href="workspace!viewHistory.do?processInstanceId=${item.processInstanceId}">历史</a>
           <a href="console!prepareJump.do?executionId=${item.executionId}">自由跳转</a>
         </td>
       </tr>

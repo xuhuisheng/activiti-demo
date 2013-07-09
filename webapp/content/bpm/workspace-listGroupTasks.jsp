@@ -49,7 +49,7 @@
 	    <td>${item.suspended ? '挂起' : '激活'}</td>
         <td>
           <a href="workspace!claimTask.do?taskId=${item.id}">认领</a>
-          <a href="workspace!viewHistory.do?processInstanceId=${item.executionId}">历史</a>
+          <a href="workspace!viewHistory.do?processInstanceId=${item.processInstanceId}">历史</a>
         </td>
       </tr>
       </s:iterator>

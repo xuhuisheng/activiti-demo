@@ -56,7 +56,7 @@
           <a href="workspace!resolveTask.do?taskId=${item.id}">处理</a>
 		  </s:else>
           <a href="workspace!rollback.do?taskId=${item.id}">回退</a>
-          <a href="workspace!viewHistory.do?processInstanceId=${item.executionId}">历史</a>
+          <a href="workspace!viewHistory.do?processInstanceId=${item.processInstanceId}">历史</a>
         </td>
       </tr>
       </s:iterator>

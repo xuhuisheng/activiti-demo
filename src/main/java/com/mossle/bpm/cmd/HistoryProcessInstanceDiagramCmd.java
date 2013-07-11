@@ -25,6 +25,7 @@ import org.activiti.engine.impl.persistence.entity.HistoricProcessInstanceEntity
 import org.activiti.engine.impl.persistence.entity.HistoricTaskInstanceEntity;
 import org.activiti.engine.impl.persistence.entity.ProcessDefinitionEntity;
 import org.activiti.engine.impl.pvm.process.ActivityImpl;
+import org.activiti.engine.impl.bpmn.diagram.ProcessDiagramGenerator;
 
 public class HistoryProcessInstanceDiagramCmd implements Command<InputStream> {
     protected String historyProcessInstanceId;
@@ -54,7 +55,7 @@ public class HistoryProcessInstanceDiagramCmd implements Command<InputStream> {
                 processDefinitionId);
         BpmnModel bpmnModel = getBpmnModelCmd.execute(commandContext);
 
-        InputStream is = ChineseProcessDiagramGenerator.generateDiagram(
+        InputStream is = ProcessDiagramGenerator.generateDiagram(
                 bpmnModel, "png", activityIds);
 
         return is;

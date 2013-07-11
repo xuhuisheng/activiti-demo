@@ -49,7 +49,7 @@
 	    <td>${item.assignee}</td>
 	    <td>${item.claimTime}</td>
 		<td>
-          <a href="workspace!viewHistory.do?processInstanceId=${item.id}">历史</a>
+          <a href="workspace!viewHistory.do?processInstanceId=${item.processInstanceId}">历史</a>
           <a href="${scopePrefix}/diagram-viewer/index.html?processInstanceId=${item.id}&processDefinitionId=${item.processDefinitionId}">diagram-viewer</a>
         </td>
       </tr>

@@ -18,6 +18,7 @@ import com.mossle.core.util.IoUtils;
 import org.activiti.engine.HistoryService;
 import org.activiti.engine.ProcessEngine;
 import org.activiti.engine.RepositoryService;
+import org.activiti.engine.RuntimeService;
 import org.activiti.engine.TaskService;
 import org.activiti.engine.history.HistoricProcessInstance;
 import org.activiti.engine.history.HistoricTaskInstance;
@@ -26,6 +27,7 @@ import org.activiti.engine.impl.interceptor.Command;
 import org.activiti.engine.impl.interceptor.Command;
 import org.activiti.engine.impl.interceptor.CommandExecutor;
 import org.activiti.engine.repository.ProcessDefinition;
+import org.activiti.engine.runtime.ProcessInstance;
 import org.activiti.engine.task.Task;
 
 import org.apache.struts2.ServletActionContext;
@@ -34,9 +36,15 @@ import org.apache.struts2.convention.annotation.Results;
 
 import org.springframework.jdbc.core.JdbcTemplate;
 
-@Results( { @Result(name = ConsoleAction.RELOAD, location = "console!listProcessDefinitions.do?operationMode=RETRIEVE", type = "redirect") })
+@Results({
+	@Result(name = ConsoleAction.RELOAD_PROCESS_DEFINITION, location = "console!listProcessDefinitions.do?operationMode=RETRIEVE", type = "redirect"),
+	@Result(name = ConsoleAction.RELOAD_PROCESS_INSTANCE, location = "console!listProcessInstances.do?operationMode=RETRIEVE", type = "redirect"),
+	@Result(name = ConsoleAction.RELOAD_TASK, location = "console!listTasks.do?operationMode=RETRIEVE", type = "redirect")
+})
 public class ConsoleAction extends BaseAction {
-    public static final String RELOAD = "reload";
+    public static final String RELOAD_PROCESS_DEFINITION = "reload-process-definition";
+    public static final String RELOAD_PROCESS_INSTANCE = "reload-process-instance";
+    public static final String RELOAD_TASK = "reload-task";
     private ProcessEngine processEngine;
     private List<ProcessDefinition> processDefinitions;
     private String processDefinitionId;
@@ -51,6 +59,9 @@ public class ConsoleAction extends BaseAction {
     private String activityId;
     private CommandExecutor commandExecutor;
     private Map<String, String> activityMap;
+	private String processInstanceId;
+	private String deleteReason;
+	private List<ProcessInstance> processInstances;
 
     /**
      * 新建流程.
@@ -67,7 +78,7 @@ public class ConsoleAction extends BaseAction {
         repositoryService.createDeployment().addInputStream(
                 "process.bpmn20.xml", bais).deploy();
 
-        return RELOAD;
+        return RELOAD_PROCESS_DEFINITION;
     }
 
     /**
@@ -91,7 +102,7 @@ public class ConsoleAction extends BaseAction {
         repositoryService.deleteDeployment(processDefinition.getDeploymentId(),
                 true);
 
-        return RELOAD;
+        return RELOAD_PROCESS_DEFINITION;
     }
 
     public String suspendProcessDefinition() {
@@ -99,7 +110,7 @@ public class ConsoleAction extends BaseAction {
                 .getRepositoryService();
         repositoryService.suspendProcessDefinitionById(processDefinitionId);
 
-        return RELOAD;
+        return RELOAD_PROCESS_DEFINITION;
     }
 
     public String activeProcessDefinition() {
@@ -108,7 +119,7 @@ public class ConsoleAction extends BaseAction {
 
         repositoryService.activateProcessDefinitionById(processDefinitionId);
 
-        return RELOAD;
+        return RELOAD_PROCESS_DEFINITION;
     }
 
     public void graphProcessDefinition() throws Exception {
@@ -148,12 +159,36 @@ public class ConsoleAction extends BaseAction {
      * 流程实例.
      */
     public String listProcessInstances() {
-        HistoryService historyService = processEngine.getHistoryService();
+        RuntimeService runtimeService = processEngine.getRuntimeService();
 
-        historicProcessInstances = historyService
-                .createHistoricProcessInstanceQuery().list();
+        processInstances = runtimeService
+                .createProcessInstanceQuery().list();
 
         return "listProcessInstances";
+    }
+
+    public String removeProcessInstance() {
+        RuntimeService runtimeService = processEngine
+                .getRuntimeService();
+		runtimeService.deleteProcessInstance(processInstanceId, deleteReason);
+
+        return RELOAD_PROCESS_INSTANCE;
+    }
+
+    public String suspendProcessInstance() {
+        RuntimeService runtimeService = processEngine
+                .getRuntimeService();
+        runtimeService.suspendProcessInstanceById(processInstanceId);
+
+        return RELOAD_PROCESS_INSTANCE;
+    }
+
+    public String activeProcessInstance() {
+        RuntimeService runtimeService = processEngine
+                .getRuntimeService();
+        runtimeService.activateProcessInstanceById(processInstanceId);
+
+        return RELOAD_PROCESS_INSTANCE;
     }
 
     /**
@@ -198,7 +233,7 @@ public class ConsoleAction extends BaseAction {
 
         commandExecutor.execute(cmd);
 
-        return RELOAD;
+        return RELOAD_TASK;
     }
 
     // ~ ======================================================================
@@ -265,4 +300,16 @@ public class ConsoleAction extends BaseAction {
     public Map<String, String> getActivityMap() {
         return activityMap;
     }
+
+	public void setProcessInstanceId(String processInstanceId) {
+		this.processInstanceId = processInstanceId;
+	}
+
+	public void setDeleteReason(String deleteReason) {
+		this.deleteReason = deleteReason;
+	}
+
+	public List<ProcessInstance> getProcessInstances() {
+		return processInstances;
+	}
 }

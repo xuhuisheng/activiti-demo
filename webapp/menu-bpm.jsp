@@ -18,7 +18,7 @@
 			  <li class="m-icn-add-user"><a href="${scopePrefix}/bpm/workspace!listRunningProcessInstances.do">发起的流程</a></li>
 			  <li class="m-icn-add-user"><a href="${scopePrefix}/bpm/workspace!listInvolvedProcessInstances.do">参与的流程</a></li>
 			  <li class="m-icn-add-user"><a href="${scopePrefix}/bpm/workspace!listProcessDefinitions.do">流程列表</a></li>
-			  <li class="m-icn-add-user"><a href="${scopePrefix}/bpm/workspace!prepareAutoDelegate.do">设置自动代理</a></li>
+			  <li class="m-icn-add-user"><a href="${scopePrefix}/bpm/workspace!prepareAutoDelegate.do">设置自动委托</a></li>
             </ul>
           </div>
         </div>

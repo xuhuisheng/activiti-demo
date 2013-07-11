@@ -20,6 +20,7 @@ import org.activiti.engine.ProcessEngine;
 import org.activiti.engine.RepositoryService;
 import org.activiti.engine.RuntimeService;
 import org.activiti.engine.TaskService;
+import org.activiti.engine.history.HistoricActivityInstance;
 import org.activiti.engine.history.HistoricProcessInstance;
 import org.activiti.engine.history.HistoricTaskInstance;
 import org.activiti.engine.impl.ServiceImpl;
@@ -50,7 +51,6 @@ public class ConsoleAction extends BaseAction {
     private String processDefinitionId;
     private String xml;
     private List<HistoricProcessInstance> historicProcessInstances;
-    private List<HistoricTaskInstance> historicTasks;
     private List<Task> tasks;
     private JdbcTemplate jdbcTemplate;
     private List<Map<String, Object>> delegateInfos;
@@ -62,6 +62,9 @@ public class ConsoleAction extends BaseAction {
 	private String processInstanceId;
 	private String deleteReason;
 	private List<ProcessInstance> processInstances;
+	private String taskId;
+	private List<HistoricActivityInstance> historicActivityInstances;
+	private List<HistoricTaskInstance> historicTaskInstances;
 
     /**
      * 新建流程.
@@ -201,6 +204,37 @@ public class ConsoleAction extends BaseAction {
         return "listTasks";
     }
 
+	// The task cannot be deleted because is part of a running process
+	/**
+     * 历史
+     */
+	public String listHistoricProcessInstances() {
+		HistoryService historyService = processEngine.getHistoryService();
+
+        historicProcessInstances = historyService
+                .createHistoricProcessInstanceQuery().list();
+
+		return "listHistoricProcessInstances";
+	}
+
+	public String listHistoricActivityInstances() {
+		HistoryService historyService = processEngine.getHistoryService();
+
+        historicActivityInstances = historyService
+                .createHistoricActivityInstanceQuery().list();
+
+		return "listHistoricActivityInstances";
+	}
+
+	public String listHistoricTasks() {
+		HistoryService historyService = processEngine.getHistoryService();
+
+		historicTaskInstances = historyService.createHistoricTaskInstanceQuery()
+			.list();
+
+		return "listHistoricTasks";
+	}
+
     // ~ ======================================================================
     /**
      * 自动委派
@@ -261,10 +295,6 @@ public class ConsoleAction extends BaseAction {
         return historicProcessInstances;
     }
 
-    public List<HistoricTaskInstance> getHistoricTasks() {
-        return historicTasks;
-    }
-
     public List<Task> getTasks() {
         return tasks;
     }
@@ -311,5 +341,17 @@ public class ConsoleAction extends BaseAction {
 
 	public List<ProcessInstance> getProcessInstances() {
 		return processInstances;
+	}
+
+	public void setTaskId(String taskId) {
+		this.taskId = taskId;
+	}
+
+	public List<HistoricActivityInstance> getHistoricActivityInstances() {
+		return historicActivityInstances;
+	}
+
+	public List<HistoricTaskInstance> getHistoricTaskInstances() {
+		return historicTaskInstances;
 	}
 }

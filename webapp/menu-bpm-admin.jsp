@@ -28,9 +28,9 @@
           </div>
           <div id="collapse-history" class="accordion-body collapse ${currentMenu == 'history' ? 'in' : ''}">
             <ul class="accordion-inner nav nav-list">
-			  <li class="m-icn-add-user"><a href="${scopePrefix}/bpm/console!listHistoryProcessInstances.do">流程实例</a></li>
-			  <li class="m-icn-add-user"><a href="${scopePrefix}/bpm/console!listHistoryActivities.do">节点</a></li>
-			  <li class="m-icn-add-user"><a href="${scopePrefix}/bpm/console!listHistoryTasks.do">任务</a></li>
+			  <li class="m-icn-add-user"><a href="${scopePrefix}/bpm/console!listHistoricProcessInstances.do">流程实例</a></li>
+			  <li class="m-icn-add-user"><a href="${scopePrefix}/bpm/console!listHistoricActivityInstances.do">节点</a></li>
+			  <li class="m-icn-add-user"><a href="${scopePrefix}/bpm/console!listHistoricTasks.do">任务</a></li>
             </ul>
           </div>
         </div>

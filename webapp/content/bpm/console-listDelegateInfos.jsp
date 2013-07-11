@@ -1,6 +1,6 @@
 <%@page contentType="text/html;charset=UTF-8"%>
 <%@include file="/taglibs.jsp"%>
-<%pageContext.setAttribute("currentMenu", "bpm");%>
+<%pageContext.setAttribute("currentMenu", "delegate");%>
 <%pageContext.setAttribute("HEADER_MODEL", "bpm-admin");%>
 <!doctype html>
 <html lang="en">

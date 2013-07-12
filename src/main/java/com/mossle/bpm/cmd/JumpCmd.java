@@ -34,26 +34,10 @@ public class JumpCmd implements Command<Object> {
 		ExecutionEntity executionEntity = commandContext.getExecutionEntityManager().findExecutionById(executionId);
 		ProcessDefinitionImpl processDefinition = executionEntity.getProcessDefinition();
 		ActivityImpl activity = processDefinition.findActivity(activityId);
-		if(!executeParallelGateWayActivitys(activity,executionEntity)){//如果节点不是并发节点,则直接执行跳转
-			executionEntity.executeActivity(activity);
-		}
+
+		executionEntity.executeActivity(activity);
+
 
 		return null;
-	}
-	
-	protected boolean executeParallelGateWayActivitys(ActivityImpl activity,ExecutionEntity executionEntity){
-		boolean isExecuteParallelGateWay = false;
-		List<PvmTransition> pvms = activity.getIncomingTransitions();
-		if(pvms.size()==1){
-			TransitionImpl transitionImpl = (TransitionImpl) pvms.get(0);
-			//如果是并发,则同时激活下面多个任务节点
-			ActivityImpl gatewayActivity = transitionImpl.getSource();
-			if("parallelGateway".equals(transitionImpl.getSource().getProperty("type"))){
-				List<PvmTransition>  gatewayTransitions =  gatewayActivity.getOutgoingTransitions();
-				executionEntity.takeAll(gatewayTransitions, null);
-				isExecuteParallelGateWay = true;
-			}
-		}
-		return isExecuteParallelGateWay;
 	}
 }

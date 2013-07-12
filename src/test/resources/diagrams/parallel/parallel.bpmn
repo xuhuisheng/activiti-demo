@@ -1,0 +1,117 @@
+<definitions
+  xmlns='http://www.omg.org/spec/BPMN/20100524/MODEL'
+  xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'
+  xmlns:activiti='http://activiti.org/bpmn'
+  xmlns:bpmndi='http://www.omg.org/spec/BPMN/20100524/DI'
+  xmlns:omgdc='http://www.omg.org/spec/DD/20100524/DC'
+  xmlns:omgdi='http://www.omg.org/spec/DD/20100524/DI'
+  typeLanguage='http://www.w3.org/2001/XMLSchema'
+  expressionLanguage='http://www.w3.org/1999/XPath'
+  targetNamespace='http://www.mossle.com'>
+<process id='parallel' name='parallel' isExecutable='true'>
+  <startEvent id='startnone-1' name='startnone-1' activiti:initiator='initiator'/>
+  <sequenceFlow id='transition-1' sourceRef='startnone-1' targetRef='taskuser-1'/>
+  <userTask id='taskuser-1' name='taskuser-1'>
+    <humanPerformer>
+      <resourceAssignmentExpression>
+        <formalExpression>admin</formalExpression>
+      </resourceAssignmentExpression>
+    </humanPerformer>
+  </userTask>
+  <sequenceFlow id='transition-4' sourceRef='taskuser-1' targetRef='parallel-1'/>
+  <parallelGateway id='parallel-1' name='parallel-1'/>
+  <sequenceFlow id='transition-5' sourceRef='parallel-1' targetRef='taskuser-3'/>
+  <sequenceFlow id='transition-6' name='to taskuser-4' sourceRef='parallel-1' targetRef='taskuser-4'/>
+  <userTask id='taskuser-3' name='taskuser-3'>
+    <humanPerformer>
+      <resourceAssignmentExpression>
+        <formalExpression>admin</formalExpression>
+      </resourceAssignmentExpression>
+    </humanPerformer>
+  </userTask>
+  <sequenceFlow id='transition-8' sourceRef='taskuser-3' targetRef='parallel-2'/>
+  <userTask id='taskuser-4' name='taskuser-4'>
+    <humanPerformer>
+      <resourceAssignmentExpression>
+        <formalExpression>admin</formalExpression>
+      </resourceAssignmentExpression>
+    </humanPerformer>
+  </userTask>
+  <sequenceFlow id='transition-9' sourceRef='taskuser-4' targetRef='parallel-2'/>
+  <parallelGateway id='parallel-2' name='parallel-2'/>
+  <sequenceFlow id='transition-10' sourceRef='parallel-2' targetRef='taskuser-5'/>
+  <userTask id='taskuser-5' name='taskuser-5'>
+    <humanPerformer>
+      <resourceAssignmentExpression>
+        <formalExpression>admin</formalExpression>
+      </resourceAssignmentExpression>
+    </humanPerformer>
+  </userTask>
+  <sequenceFlow id='transition-11' sourceRef='taskuser-5' targetRef='endnone-1'/>
+  <endEvent id='endnone-1' name='endnone-1'/>
+</process>
+<bpmndi:BPMNDiagram id='BPMNDiagram_parallel'>
+  <bpmndi:BPMNPlane bpmnElement='parallel' id='BPMNPlane_parallel'>
+    <bpmndi:BPMNShape bpmnElement='startnone-1' id='BPMNShape_startnone-1'>
+      <omgdc:Bounds height='40' width='40' x='15' y='145'/>
+    </bpmndi:BPMNShape>
+    <bpmndi:BPMNShape bpmnElement='taskuser-1' id='BPMNShape_taskuser-1'>
+      <omgdc:Bounds height='80' width='120' x='84' y='125'/>
+    </bpmndi:BPMNShape>
+    <bpmndi:BPMNShape bpmnElement='parallel-1' id='BPMNShape_parallel-1'>
+      <omgdc:Bounds height='40' width='40' x='235' y='145'/>
+    </bpmndi:BPMNShape>
+    <bpmndi:BPMNShape bpmnElement='taskuser-3' id='BPMNShape_taskuser-3'>
+      <omgdc:Bounds height='80' width='120' x='305' y='15'/>
+    </bpmndi:BPMNShape>
+    <bpmndi:BPMNShape bpmnElement='taskuser-4' id='BPMNShape_taskuser-4'>
+      <omgdc:Bounds height='80' width='120' x='305' y='235'/>
+    </bpmndi:BPMNShape>
+    <bpmndi:BPMNShape bpmnElement='parallel-2' id='BPMNShape_parallel-2'>
+      <omgdc:Bounds height='40' width='40' x='455' y='145'/>
+    </bpmndi:BPMNShape>
+    <bpmndi:BPMNShape bpmnElement='taskuser-5' id='BPMNShape_taskuser-5'>
+      <omgdc:Bounds height='80' width='120' x='525' y='125'/>
+    </bpmndi:BPMNShape>
+    <bpmndi:BPMNShape bpmnElement='endnone-1' id='BPMNShape_endnone-1'>
+      <omgdc:Bounds height='40' width='40' x='675' y='145'/>
+    </bpmndi:BPMNShape>
+    <bpmndi:BPMNEdge bpmnElement='transition-1' id='BPMNShape_transition-1'>
+      <omgdi:waypoint x='55' y='165'/>
+      <omgdi:waypoint x='84' y='165'/>
+    </bpmndi:BPMNEdge>
+    <bpmndi:BPMNEdge bpmnElement='transition-4' id='BPMNShape_transition-4'>
+      <omgdi:waypoint x='204' y='165'/>
+      <omgdi:waypoint x='235' y='165'/>
+    </bpmndi:BPMNEdge>
+    <bpmndi:BPMNEdge bpmnElement='transition-5' id='BPMNShape_transition-5'>
+      <omgdi:waypoint x='255' y='145'/>
+      <omgdi:waypoint x='255' y='55'/>
+      <omgdi:waypoint x='305' y='55'/>
+    </bpmndi:BPMNEdge>
+    <bpmndi:BPMNEdge bpmnElement='transition-6' id='BPMNShape_transition-6'>
+      <omgdi:waypoint x='255' y='185'/>
+      <omgdi:waypoint x='255' y='275'/>
+      <omgdi:waypoint x='305' y='275'/>
+    </bpmndi:BPMNEdge>
+    <bpmndi:BPMNEdge bpmnElement='transition-8' id='BPMNShape_transition-8'>
+      <omgdi:waypoint x='425' y='55'/>
+      <omgdi:waypoint x='475' y='55'/>
+      <omgdi:waypoint x='475' y='145'/>
+    </bpmndi:BPMNEdge>
+    <bpmndi:BPMNEdge bpmnElement='transition-9' id='BPMNShape_transition-9'>
+      <omgdi:waypoint x='425' y='275'/>
+      <omgdi:waypoint x='475' y='275'/>
+      <omgdi:waypoint x='475' y='185'/>
+    </bpmndi:BPMNEdge>
+    <bpmndi:BPMNEdge bpmnElement='transition-10' id='BPMNShape_transition-10'>
+      <omgdi:waypoint x='495' y='165'/>
+      <omgdi:waypoint x='525' y='165'/>
+    </bpmndi:BPMNEdge>
+    <bpmndi:BPMNEdge bpmnElement='transition-11' id='BPMNShape_transition-11'>
+      <omgdi:waypoint x='645' y='165'/>
+      <omgdi:waypoint x='675' y='165'/>
+    </bpmndi:BPMNEdge>
+  </bpmndi:BPMNPlane>
+</bpmndi:BPMNDiagram>
+</definitions>

@@ -158,10 +158,16 @@
 			<version>${jackson-jaxrs-json-provider.version}</version>
 		</dependency>
 
+		<!-- JDBC驱动 -->
 		<dependency>
 			<groupId>org.hsqldb</groupId>
 			<artifactId>hsqldb</artifactId>
 			<version>${hsqldb.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<version>5.1.17</version>
 		</dependency>
 	</dependencies>
 

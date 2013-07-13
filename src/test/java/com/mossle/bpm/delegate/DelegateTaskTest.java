@@ -68,12 +68,14 @@ public class DelegateTaskTest {
 		String userId = "leaderuser";
 		taskService.delegateTask(taskId, userId);
 		taskService.resolveTask(taskId);
+		taskService.addUserIdentityLink(taskId, userId, "delegate");
 
 		/** 第二次委托 */
 		// task.setDelegationState(DelegationState.PENDING);
 		userId = "admin";
 		taskService.delegateTask(taskId, userId);
 		taskService.resolveTask(taskId);
+		taskService.addUserIdentityLink(taskId, userId, "delegate");
 
 		taskService.complete(taskId);
 
@@ -83,7 +85,7 @@ public class DelegateTaskTest {
 		 */
 		List<HistoricIdentityLink> historicIdentityLinks = historyService.getHistoricIdentityLinksForTask(taskId);
 		for (HistoricIdentityLink historicIdentityLink : historicIdentityLinks) {
-			System.err.println(historicIdentityLink.getUserId());
+			System.err.println(historicIdentityLink.getUserId() + " " + historicIdentityLink.getType());
 		}
 
 	}

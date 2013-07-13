@@ -1,0 +1,9 @@
+
+* 获得BpmnModel的办法
+  * BpmnModel bpmnModel = repositoryService.getBpmnModel(processDefinition.getId());
+* 为所有流程所有节点设置全局事件监听器的方法
+  * postBpmnParseHandlers
+* 获得FormProperty的办法
+  * TaskDefinition taskDefinition = processDefinition.getTaskDefinitions().get(taskDefinitionKey);
+  * org.activiti.engine.impl.form.DefaultFormHandler formHandler = (org.activiti.engine.impl.form.DefaultFormHandler) taskDefinition.getTaskFormHandler();
+  * List<FormPropertyHandler> handlers = formHandler.getFormPropertyHandlers();

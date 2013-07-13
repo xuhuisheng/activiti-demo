@@ -38,11 +38,10 @@ public class DelegateBPMNParserHandler implements BpmnParseHandler {
 
 		ActivityBehavior activityBehavior = activity
                 .getActivityBehavior();
-		if (activityBehavior instanceof UserTaskActivityBehavior)
-		{
-        TaskDefinition taskDefinition = ((UserTaskActivityBehavior) activityBehavior).getTaskDefinition();
-        taskDefinition.addTaskListener(TaskListener.EVENTNAME_ASSIGNMENT,
-                new DelegateTaskListener());
+		if (activityBehavior instanceof UserTaskActivityBehavior) {
+			TaskDefinition taskDefinition = ((UserTaskActivityBehavior) activityBehavior).getTaskDefinition();
+			taskDefinition.addTaskListener(TaskListener.EVENTNAME_ASSIGNMENT,
+					new DelegateTaskListener());
 		}
     }
 }

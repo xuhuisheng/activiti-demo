@@ -50,6 +50,21 @@
           </div>
         </div>
 
+        <div class="accordion-group">
+          <div class="accordion-heading">
+            <a class="accordion-toggle" data-toggle="collapse" data-parent="#m-sidebar" href="#collapse-user">
+              <i class="icon-user"></i>
+              <span class="title">用户管理</span>
+            </a>
+          </div>
+          <div id="collapse-user" class="accordion-body collapse ${currentMenu == 'user' ? 'in' : ''}">
+            <ul class="accordion-inner nav nav-list">
+			  <li class="m-icn-add-user"><a href="${scopePrefix}/bpm/identity!listUsers.do">用户管理</a></li>
+			  <li class="m-icn-add-user"><a href="${scopePrefix}/bpm/identity!listGroups.do">群组管理</a></li>
+            </ul>
+          </div>
+        </div>
+
 		<footer id="m-footer" class="text-center">
 		  <hr>
 		  &copy;Mossle

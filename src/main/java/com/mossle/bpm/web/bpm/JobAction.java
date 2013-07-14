@@ -23,6 +23,7 @@ public class JobAction extends BaseAction {
     public static final String RELOAD = "reload";
     private ProcessEngine processEngine;
 	private List<Job> jobs;
+	private String id;
 
 	public String list() {
 		jobs = processEngine.getManagementService().createJobQuery().list();

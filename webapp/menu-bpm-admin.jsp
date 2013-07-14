@@ -65,6 +65,20 @@
           </div>
         </div>
 
+        <div class="accordion-group">
+          <div class="accordion-heading">
+            <a class="accordion-toggle" data-toggle="collapse" data-parent="#m-sidebar" href="#collapse-job">
+              <i class="icon-user"></i>
+              <span class="title">异步消息管理</span>
+            </a>
+          </div>
+          <div id="collapse-job" class="accordion-body collapse ${currentMenu == 'user' ? 'in' : ''}">
+            <ul class="accordion-inner nav nav-list">
+			  <li class="m-icn-add-user"><a href="${scopePrefix}/bpm/job!list.do">异步消息管理</a></li>
+            </ul>
+          </div>
+        </div>
+
 		<footer id="m-footer" class="text-center">
 		  <hr>
 		  &copy;Mossle

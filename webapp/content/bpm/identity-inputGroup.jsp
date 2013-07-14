@@ -27,29 +27,23 @@
 
 		<div class="content content-inner">
 
-<form id="demoForm" method="post" action="identity!saveUser.do?operationMode=STORE" class="form-horizontal">
+<form id="demoForm" method="post" action="identity!saveGroup.do?operationMode=STORE" class="form-horizontal">
   <div class="control-group">
     <label class="control-label">编号</label>
 	<div class="controls">
-	  <input type="text" name="userId" value="${user.id}">
+	  <input type="text" name="groupId" value="${group.id}">
     </div>
   </div>
   <div class="control-group">
     <label class="control-label">名</label>
 	<div class="controls">
-	  <input type="text" name="firstName" value="${user.firstName}">
+	  <input type="text" name="name" value="${group.name}">
     </div>
   </div>
   <div class="control-group">
-    <label class="control-label">姓</label>
+    <label class="control-label">类型</label>
 	<div class="controls">
-	  <input type="text" name="lastName" value="${user.lastName}">
-    </div>
-  </div>
-  <div class="control-group">
-    <label class="control-label">邮箱</label>
-	<div class="controls">
-	  <input type="text" name="email" value="${user.email}">
+	  <input type="text" name="type" value="${group.type}">
     </div>
   </div>
   <div class="control-group">

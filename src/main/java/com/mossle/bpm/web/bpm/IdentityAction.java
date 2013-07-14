@@ -1,8 +1,8 @@
 package com.mossle.bpm.web.bpm;
 
-
+import java.util.ArrayList;
 import java.util.List;
-
+import java.util.Map;
 
 import com.mossle.core.struts2.BaseAction;
 
@@ -23,17 +23,20 @@ public class IdentityAction extends BaseAction {
     public static final String RELOAD_USER = "reload-user";
     public static final String RELOAD_GROUP = "reload-group";
     private ProcessEngine processEngine;
+	private JdbcTemplate jdbcTemplate;
 	private List<User> users;
 	private User user;
 	private String userId;
 	private String firstName;
 	private String lastName;
 	private String email;
+	private List<String> selectedGroupIds = new ArrayList<String>();
 	private List<Group> groups;
 	private Group group;
 	private String groupId;
 	private String name;
 	private String type;
+	private List<String> selectedUserIds = new ArrayList<String>();
 
 	public String listUsers() {
 		users = processEngine.getIdentityService().createUserQuery().list();
@@ -64,6 +67,30 @@ public class IdentityAction extends BaseAction {
 		return RELOAD_USER;
 	}
 
+	public String inputUserMembership() {
+		user = processEngine.getIdentityService().createUserQuery().userId(userId).singleResult();
+		groups = processEngine.getIdentityService().createGroupQuery().list();
+		List<Map<String, Object>> list = jdbcTemplate.queryForList("select group_id_ from ACT_ID_MEMBERSHIP where user_id_=?", userId);
+		for (Map<String, Object> map : list) {
+			selectedGroupIds.add(map.get("group_id_").toString());
+		}
+		return "inputUserMembership";
+	}
+
+	public String saveUserMembership() {
+		List<Map<String, Object>> list = jdbcTemplate.queryForList("select group_id_ from ACT_ID_MEMBERSHIP where user_id_=?", userId);
+		for (Map<String, Object> map : list) {
+			String groupId = map.get("group_id_").toString();
+			processEngine.getIdentityService().deleteMembership(userId, groupId);
+		}
+		for (String groupId : selectedGroupIds) {
+			processEngine.getIdentityService().createMembership(userId, groupId);
+		}
+
+		return RELOAD_USER;
+	}
+
+	// ~ ==================================================
 	public String listGroups() {
 		groups = processEngine.getIdentityService().createGroupQuery().list();
 		return "listGroups";
@@ -92,9 +119,36 @@ public class IdentityAction extends BaseAction {
 		return RELOAD_GROUP;
 	}
 
+	public String inputGroupMembership() {
+		group = processEngine.getIdentityService().createGroupQuery().groupId(groupId).singleResult();
+		users = processEngine.getIdentityService().createUserQuery().list();
+		List<Map<String, Object>> list = jdbcTemplate.queryForList("select user_id_ from ACT_ID_MEMBERSHIP where group_id_=?", groupId);
+		for (Map<String, Object> map : list) {
+			selectedUserIds.add(map.get("user_id_").toString());
+		}
+		return "inputGroupMembership";
+	}
+
+	public String saveGroupMembership() {
+		List<Map<String, Object>> list = jdbcTemplate.queryForList("select user_id_ from ACT_ID_MEMBERSHIP where group_id_=?", groupId);
+		for (Map<String, Object> map : list) {
+			String userId = map.get("user_id_").toString();
+			processEngine.getIdentityService().deleteMembership(userId, groupId);
+		}
+		for (String userId : selectedUserIds) {
+			processEngine.getIdentityService().createMembership(userId, groupId);
+		}
+
+		return RELOAD_GROUP;
+	}
+
 	// ~ ==================================================
 	public void setProcessEngine(ProcessEngine processEngine) {
 		this.processEngine = processEngine;
+	}
+
+	public void setJdbcTemplate(JdbcTemplate jdbcTemplate) {
+		this.jdbcTemplate = jdbcTemplate;
 	}
 
 	public List<User> getUsers() {
@@ -125,6 +179,14 @@ public class IdentityAction extends BaseAction {
 		this.email = email;
 	}
 
+	public List<String> getSelectedGroupIds() {
+		return selectedGroupIds;
+	}
+
+	public void setSelectedGroupIds(List<String> selectedGroupIds) {
+		this.selectedGroupIds = selectedGroupIds;
+	}
+
 	public List<Group> getGroups() {
 		return groups;
 	}
@@ -147,5 +209,13 @@ public class IdentityAction extends BaseAction {
 
 	public void setType(String type) {
 		this.type = type;
+	}
+
+	public List<String> getSelectedUserIds() {
+		return selectedUserIds;
+	}
+
+	public void setSelectedUserIds(List<String> selectedUserIds) {
+		this.selectedUserIds = selectedUserIds;
 	}
 }

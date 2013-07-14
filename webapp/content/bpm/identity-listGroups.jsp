@@ -49,6 +49,7 @@
         <td>
 		  <a href="identity!inputGroup.do?groupId=${item.id}">修改</a>
 		  <a href="identity!removeGroup.do?groupId=${item.id}">删除</a>
+		  <a href="identity!inputGroupMembership.do?groupId=${item.id}">设置用户</a>
         </td>
       </tr>
       </s:iterator>

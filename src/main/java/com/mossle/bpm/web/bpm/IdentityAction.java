@@ -16,18 +16,24 @@ import org.activiti.engine.identity.Group;
 import org.activiti.engine.ProcessEngine;
 
 @Results({
-	@Result(name = IdentityAction.RELOAD_USER, location = "identity!listUsers.do?operationMode=RETRIEVE", type = "redirect")
+	@Result(name = IdentityAction.RELOAD_USER, location = "identity!listUsers.do?operationMode=RETRIEVE", type = "redirect"),
+	@Result(name = IdentityAction.RELOAD_GROUP, location = "identity!listGroups.do?operationMode=RETRIEVE", type = "redirect")
 })
 public class IdentityAction extends BaseAction {
     public static final String RELOAD_USER = "reload-user";
+    public static final String RELOAD_GROUP = "reload-group";
     private ProcessEngine processEngine;
 	private List<User> users;
-	private String userId;
 	private User user;
+	private String userId;
 	private String firstName;
 	private String lastName;
 	private String email;
 	private List<Group> groups;
+	private Group group;
+	private String groupId;
+	private String name;
+	private String type;
 
 	public String listUsers() {
 		users = processEngine.getIdentityService().createUserQuery().list();
@@ -61,6 +67,29 @@ public class IdentityAction extends BaseAction {
 	public String listGroups() {
 		groups = processEngine.getIdentityService().createGroupQuery().list();
 		return "listGroups";
+	}
+
+	public String inputGroup() {
+		if (groupId != null) {
+			group = processEngine.getIdentityService().createGroupQuery().groupId(groupId).singleResult();
+		}
+		return "inputGroup";
+	}
+
+	public String saveGroup() {
+		group = processEngine.getIdentityService().createGroupQuery().groupId(groupId).singleResult();
+		if (group == null) {
+			group = processEngine.getIdentityService().newGroup(groupId);
+		}
+		group.setName(name);
+		group.setType(type);
+		processEngine.getIdentityService().saveGroup(group);
+		return RELOAD_GROUP;
+	}
+
+	public String removeGroup() {
+		processEngine.getIdentityService().deleteGroup(groupId);
+		return RELOAD_GROUP;
 	}
 
 	// ~ ==================================================
@@ -98,5 +127,25 @@ public class IdentityAction extends BaseAction {
 
 	public List<Group> getGroups() {
 		return groups;
+	}
+
+	public Group getGroup() {
+		return group;
+	}
+
+	public String getGroupId() {
+		return groupId;
+	}
+
+	public void setGroupId(String groupId) {
+		this.groupId = groupId;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public void setType(String type) {
+		this.type = type;
 	}
 }

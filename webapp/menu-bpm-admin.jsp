@@ -44,8 +44,8 @@
           </div>
           <div id="collapse-delegate" class="accordion-body collapse ${currentMenu == 'delegate' ? 'in' : ''}">
             <ul class="accordion-inner nav nav-list">
-			  <li class="m-icn-add-user"><a href="${scopePrefix}/bpm/console!listDelegateInfos.do">自动委托</a></li>
-			  <li class="m-icn-add-user"><a href="${scopePrefix}/bpm/console!listDelegateHistories.do">自动委托记录</a></li>
+			  <li class="m-icn-add-user"><a href="${scopePrefix}/bpm/delegate!listDelegateInfos.do">自动委托</a></li>
+			  <li class="m-icn-add-user"><a href="${scopePrefix}/bpm/delegate!listDelegateHistories.do">自动委托记录</a></li>
             </ul>
           </div>
         </div>

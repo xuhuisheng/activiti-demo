@@ -1,6 +1,6 @@
 <%@page contentType="text/html;charset=UTF-8"%>
 <%@include file="/taglibs.jsp"%>
-<%pageContext.setAttribute("currentMenu", "bpm");%>
+<%pageContext.setAttribute("currentMenu", "delegate");%>
 <!doctype html>
 <html lang="en">
 
@@ -26,7 +26,7 @@
 
 		<div class="content content-inner">
 
-<form id="demoForm" method="post" action="workspace!autoDelegate.do?operationMode=STORE" class="form-horizontal">
+<form id="demoForm" method="post" action="delegate!autoDelegate.do?operationMode=STORE" class="form-horizontal">
   <input id="demo_id" type="hidden" name="taskId" value="${taskId}">
   <div class="control-group">
     <label class="control-label">代理人</label>

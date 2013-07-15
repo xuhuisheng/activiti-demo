@@ -53,8 +53,6 @@ public class ConsoleAction extends BaseAction {
     private List<HistoricProcessInstance> historicProcessInstances;
     private List<Task> tasks;
     private JdbcTemplate jdbcTemplate;
-    private List<Map<String, Object>> delegateInfos;
-    private List<Map<String, Object>> delegateHistories;
     private String executionId;
     private String activityId;
     private CommandExecutor commandExecutor;
@@ -236,24 +234,6 @@ public class ConsoleAction extends BaseAction {
 	}
 
     // ~ ======================================================================
-    /**
-     * 自动委派
-     */
-    public String listDelegateInfos() {
-        delegateInfos = jdbcTemplate
-                .queryForList("select * from bpm_delegate_info");
-
-        return "listDelegateInfos";
-    }
-
-    public String listDelegateHistories() {
-        delegateHistories = jdbcTemplate
-                .queryForList("select * from bpm_delegate_history");
-
-        return "listDelegateHistories";
-    }
-
-    // ~ ======================================================================
     public String prepareJump() {
         Command<Map<String, String>> cmd = new ListActivityCmd(executionId);
 
@@ -297,18 +277,6 @@ public class ConsoleAction extends BaseAction {
 
     public List<Task> getTasks() {
         return tasks;
-    }
-
-    public void setJdbcTemplate(JdbcTemplate jdbcTemplate) {
-        this.jdbcTemplate = jdbcTemplate;
-    }
-
-    public List<Map<String, Object>> getDelegateInfos() {
-        return delegateInfos;
-    }
-
-    public List<Map<String, Object>> getDelegateHistories() {
-        return delegateHistories;
     }
 
     public String getExecutionId() {

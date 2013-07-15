@@ -15,7 +15,6 @@ import com.mossle.bpm.cmd.ProcessDefinitionDiagramCmd;
 import com.mossle.bpm.cmd.RollbackTaskCmd;
 import com.mossle.bpm.cmd.TaskDiagramCmd;
 import com.mossle.bpm.cmd.WithdrawTaskCmd;
-import com.mossle.bpm.service.DelegateService;
 
 import com.mossle.core.struts2.BaseAction;
 
@@ -67,8 +66,6 @@ public class WorkspaceAction extends BaseAction {
     private List<HistoricVariableInstance> historicVariableInstances;
     private String username;
     private CommandExecutor commandExecutor;
-    private String attorney;
-    private DelegateService delegateService;
 
     public String listProcessDefinitions() {
         RepositoryService repositoryService = processEngine
@@ -316,18 +313,6 @@ public class WorkspaceAction extends BaseAction {
     }
 
     // ~ ======================================================================
-    public String prepareAutoDelegate() {
-        return "prepareAutoDelegate";
-    }
-
-    public String autoDelegate() {
-        String username = SpringSecurityUtils.getCurrentUsername();
-        delegateService.addDelegateInfo(username, attorney);
-
-        return RELOAD;
-    }
-
-    // ~ ======================================================================
     public void setProcessEngine(ProcessEngine processEngine) {
         this.processEngine = processEngine;
     }
@@ -390,13 +375,5 @@ public class WorkspaceAction extends BaseAction {
 
     public void setCommandExecutor(CommandExecutor commandExecutor) {
         this.commandExecutor = commandExecutor;
-    }
-
-    public void setAttorney(String attorney) {
-        this.attorney = attorney;
-    }
-
-    public void setDelegateService(DelegateService delegateService) {
-        this.delegateService = delegateService;
     }
 }

@@ -14,4 +14,6 @@
 		<property name="location" value="classpath:application.properties"/>
     </bean>
 
+	<bean class="com.mossle.bpm.delegate.ApplicationContextHolder"/>
+
 </beans>

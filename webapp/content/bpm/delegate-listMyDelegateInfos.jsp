@@ -1,6 +1,6 @@
 <%@page contentType="text/html;charset=UTF-8"%>
 <%@include file="/taglibs.jsp"%>
-<%pageContext.setAttribute("currentMenu", "bpm");%>
+<%pageContext.setAttribute("currentMenu", "delegate");%>
 <!doctype html>
 <html lang="en">
 
@@ -30,34 +30,28 @@
       <tr>
         <th width="10" class="m-table-check"><input type="checkbox" name="checkAll" onchange="toggleSelectedItems(this.checked)"></th>
         <th class="sorting" name="id">编号</th>
-        <th class="sorting" name="name">名称</th>
-        <th class="sorting" name="createTime">创建时间</th>
-        <th class="sorting" name="assignee">负责人</th>
+        <th class="sorting" name="key">委托人</th>
+        <th class="sorting" name="name">被委托人</th>
+        <th class="sorting" name="category">开始时间</th>
+        <th class="sorting" name="version">结束时间</th>
+        <th class="sorting" name="description">流程定义</th>
         <th class="sorting" name="suspended">状态</th>
-        <th width="170">&nbsp;</th>
+        <th width="150">&nbsp;</th>
       </tr>
     </thead>
 
     <tbody>
-      <s:iterator value="tasks" var="item">
+      <s:iterator value="delegateInfos" var="item">
       <tr>
         <td><input type="checkbox" class="selectedItem" name="selectedItem" value="${item.id}"></td>
 	    <td>${item.id}</td>
-	    <td>${item.name}</td>
-	    <td>${item.createTime}</td>
 	    <td>${item.assignee}</td>
-	    <td>${item.suspended ? '挂起' : '激活'}</td>
-        <td>
-          <a href="workspace!prepareCompleteTask.do?taskId=${item.id}">完成</a>
-		  <s:if test="delegationState != 'PENDING'">
-          <a href="workspace!prepareDelegateTask.do?taskId=${item.id}">代理</a>
-		  </s:if>
-		  <s:else>
-          <a href="workspace!resolveTask.do?taskId=${item.id}">处理</a>
-		  </s:else>
-          <a href="workspace!rollback.do?taskId=${item.id}">回退</a>
-          <a href="workspace!viewHistory.do?processInstanceId=${item.processInstanceId}">历史</a>
-        </td>
+	    <td>${item.attorney}</td>
+	    <td>${item.start_time}</td>
+	    <td>${item.end_time}</td>
+	    <td>${item.process_definition_id}</td>
+	    <td>${item.status}</td>
+	    <td><a href="delegate!removeDelegateInfo.do?id=${item.id}">删除</a></td>
       </tr>
       </s:iterator>
     </tbody>

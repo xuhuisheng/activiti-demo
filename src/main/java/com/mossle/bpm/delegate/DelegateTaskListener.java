@@ -38,7 +38,7 @@ public class DelegateTaskListener implements TaskListener {
                     String assignee = (String) map.get("assignee");
                     String attorney = (String) map.get("attorney");
                     String processDefinitionId = (String) map
-                            .get("process_definition_dd");
+                            .get("process_definition_id");
                     Date startTime = (Date) map.get("start_time");
                     Date endTime = (Date) map.get("end_time");
 
@@ -69,7 +69,7 @@ public class DelegateTaskListener implements TaskListener {
                 }
             }
         } catch (Exception ex) {
-            System.err.println(ex);
+			logger.error(ex.getMessage(), ex);
         }
     }
 

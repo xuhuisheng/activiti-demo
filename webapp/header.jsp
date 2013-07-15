@@ -1,5 +1,15 @@
 <%@ page language="java" pageEncoding="UTF-8" %>
-
+<%@page import="java.util.List"%>
+<%@page import="java.util.Map"%>
+<%@page import="org.springframework.context.ApplicationContext"%>
+<%@page import="org.springframework.jdbc.core.JdbcTemplate"%>
+<%@page import="org.springframework.web.context.support.WebApplicationContextUtils"%>
+<%
+    ApplicationContext ctx = null;
+    ctx = WebApplicationContextUtils.getWebApplicationContext(application);
+	JdbcTemplate jdbcTemplate = (JdbcTemplate) ctx.getBean("jdbcTemplate");
+	List<Map<String, Object>> users = jdbcTemplate.queryForList("select * from ACT_ID_USER");
+%>
     <s:actionmessage id="m-success-message" cssStyle="display:none;"/>
 
     <!-- start of header bar -->
@@ -30,10 +40,15 @@
                   <b class="caret"></b>
                 </a>
                 <ul class="dropdown-menu">
-                  <li><a href="${scopePrefix}/index.jsp?username=admin">切换用户admin</a></li>
-                  <li><a href="${scopePrefix}/index.jsp?username=user">切换用户user</a></li>
-                  <li><a href="${scopePrefix}/index.jsp?username=hruser">切换用户hruser</a></li>
-                  <li><a href="${scopePrefix}/index.jsp?username=leaduser">切换用户leaduser</a></li>
+<%
+	for (Map<String, Object> item : users) {
+		pageContext.setAttribute("item", item);
+%>
+                  <li><a href="${scopePrefix}/index.jsp?username=${item.id_}">切换用户${item.id_}</a></li>
+<%
+	}
+	pageContext.removeAttribute("item");
+%>
                 </ul>
               </li>
             </ul>

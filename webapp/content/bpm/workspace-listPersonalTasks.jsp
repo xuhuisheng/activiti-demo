@@ -49,7 +49,7 @@
 	    <td>${item.suspended ? '挂起' : '激活'}</td>
         <td>
           <a href="workspace!prepareCompleteTask.do?taskId=${item.id}">完成</a>
-		  <s:if test="delegation != 'PENDING'">
+		  <s:if test="delegationState != 'PENDING'">
           <a href="workspace!prepareDelegateTask.do?taskId=${item.id}">代理</a>
 		  </s:if>
 		  <s:else>

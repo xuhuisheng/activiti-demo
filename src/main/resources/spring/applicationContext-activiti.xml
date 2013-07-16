@@ -20,7 +20,7 @@
 		</property>
 
 		<property name="transactionManager" ref="transactionManager"/>
-		<property name="databaseType" value="h2"/>
+		<property name="databaseType" value="${databaseType}"/>
 
 		<!-- 生成流程图的字体 -->
         <property name="activityFontName" value="宋体"/>

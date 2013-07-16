@@ -4,19 +4,17 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import com.mossle.core.struts2.BaseAction;
-
-import org.apache.struts2.ServletActionContext;
+import org.activiti.engine.ProcessEngine;
+import org.activiti.engine.identity.Group;
+import org.activiti.engine.identity.User;
 import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.convention.annotation.Results;
-
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.activiti.engine.identity.User;
-import org.activiti.engine.identity.Group;
-import org.activiti.engine.ProcessEngine;
+
+import com.mossle.core.struts2.BaseAction;
 
 /**
- * 用户管理
+ * 用户和组的管理
  * 
  * @author LuZhao
  * 
@@ -42,11 +40,22 @@ public class IdentityAction extends BaseAction {
 	private String type;
 	private List<String> selectedUserIds = new ArrayList<String>();
 
+	// ~ =======================用户=============================
+	/**
+	 * 用户列表
+	 * 
+	 * @return
+	 */
 	public String listUsers() {
 		users = processEngine.getIdentityService().createUserQuery().list();
 		return "listUsers";
 	}
 
+	/**
+	 * 添加和修改用户页面
+	 * 
+	 * @return
+	 */
 	public String inputUser() {
 		if (userId != null) {
 			user = processEngine.getIdentityService().createUserQuery().userId(userId).singleResult();
@@ -54,6 +63,11 @@ public class IdentityAction extends BaseAction {
 		return "inputUser";
 	}
 
+	/**
+	 * 添加和修改用户
+	 * 
+	 * @return
+	 */
 	public String saveUser() {
 		user = processEngine.getIdentityService().createUserQuery().userId(userId).singleResult();
 		if (user == null) {
@@ -66,11 +80,21 @@ public class IdentityAction extends BaseAction {
 		return RELOAD_USER;
 	}
 
+	/**
+	 * 删除用户
+	 * 
+	 * @return
+	 */
 	public String removeUser() {
 		processEngine.getIdentityService().deleteUser(userId);
 		return RELOAD_USER;
 	}
 
+	/**
+	 * 为用户添加和修改组页面
+	 * 
+	 * @return
+	 */
 	public String inputUserMembership() {
 		user = processEngine.getIdentityService().createUserQuery().userId(userId).singleResult();
 		groups = processEngine.getIdentityService().createGroupQuery().list();
@@ -81,6 +105,11 @@ public class IdentityAction extends BaseAction {
 		return "inputUserMembership";
 	}
 
+	/**
+	 * 为用户添加和修改组
+	 * 
+	 * @return
+	 */
 	public String saveUserMembership() {
 		List<Map<String, Object>> list = jdbcTemplate.queryForList("select group_id_ from ACT_ID_MEMBERSHIP where user_id_=?", userId);
 		for (Map<String, Object> map : list) {
@@ -94,12 +123,23 @@ public class IdentityAction extends BaseAction {
 		return RELOAD_USER;
 	}
 
-	// ~ ==================================================
+	// ~ =======================组=============================
+
+	/**
+	 * 组列表
+	 * 
+	 * @return
+	 */
 	public String listGroups() {
 		groups = processEngine.getIdentityService().createGroupQuery().list();
 		return "listGroups";
 	}
 
+	/**
+	 * 添加和修改组页面
+	 * 
+	 * @return
+	 */
 	public String inputGroup() {
 		if (groupId != null) {
 			group = processEngine.getIdentityService().createGroupQuery().groupId(groupId).singleResult();
@@ -107,6 +147,11 @@ public class IdentityAction extends BaseAction {
 		return "inputGroup";
 	}
 
+	/**
+	 * 添加和修改组
+	 * 
+	 * @return
+	 */
 	public String saveGroup() {
 		group = processEngine.getIdentityService().createGroupQuery().groupId(groupId).singleResult();
 		if (group == null) {
@@ -118,11 +163,21 @@ public class IdentityAction extends BaseAction {
 		return RELOAD_GROUP;
 	}
 
+	/**
+	 * 删除
+	 * 
+	 * @return
+	 */
 	public String removeGroup() {
 		processEngine.getIdentityService().deleteGroup(groupId);
 		return RELOAD_GROUP;
 	}
 
+	/**
+	 * 添加和修改该组下面的用户页面
+	 * 
+	 * @return
+	 */
 	public String inputGroupMembership() {
 		group = processEngine.getIdentityService().createGroupQuery().groupId(groupId).singleResult();
 		users = processEngine.getIdentityService().createUserQuery().list();
@@ -133,6 +188,11 @@ public class IdentityAction extends BaseAction {
 		return "inputGroupMembership";
 	}
 
+	/**
+	 * 添加和修改设置该组下面的用户
+	 * 
+	 * @return
+	 */
 	public String saveGroupMembership() {
 		List<Map<String, Object>> list = jdbcTemplate.queryForList("select user_id_ from ACT_ID_MEMBERSHIP where group_id_=?", groupId);
 		for (Map<String, Object> map : list) {

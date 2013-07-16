@@ -16,3 +16,6 @@ Changes in version 1.0.0-SNAPSHOT (2013-00-00)
 增加一些代码注释
 
 
+2013/7/16
+使用oracle11g进行测试
+用户和组测试通过

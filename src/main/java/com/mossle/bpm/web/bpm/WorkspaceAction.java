@@ -342,7 +342,7 @@ public class WorkspaceAction extends BaseAction {
 	}
 
 	/**
-	 * 查看历史（包含流程跟踪、任务列表（完成和未完成）、流程变量）
+	 * 查看历史【包含流程跟踪、任务列表（完成和未完成）、流程变量】
 	 * 
 	 * @return
 	 */

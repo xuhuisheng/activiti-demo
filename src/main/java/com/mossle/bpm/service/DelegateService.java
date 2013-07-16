@@ -14,8 +14,7 @@ public class DelegateService {
     private JdbcTemplate jdbcTemplate;
 
     public void addDelegateInfo(String assignee, String attorney) {
-        jdbcTemplate
-                .update(
+        jdbcTemplate.update(
                         "insert into bpm_delegate_info(assignee,attorney,status) values(?,?,?)",
                         assignee, attorney, 1);
     }

@@ -15,14 +15,18 @@ import org.activiti.engine.identity.User;
 import org.activiti.engine.identity.Group;
 import org.activiti.engine.ProcessEngine;
 
-@Results({
-	@Result(name = IdentityAction.RELOAD_USER, location = "identity!listUsers.do?operationMode=RETRIEVE", type = "redirect"),
-	@Result(name = IdentityAction.RELOAD_GROUP, location = "identity!listGroups.do?operationMode=RETRIEVE", type = "redirect")
-})
+/**
+ * 用户管理
+ * 
+ * @author LuZhao
+ * 
+ */
+@Results({ @Result(name = IdentityAction.RELOAD_USER, location = "identity!listUsers.do?operationMode=RETRIEVE", type = "redirect"),
+		@Result(name = IdentityAction.RELOAD_GROUP, location = "identity!listGroups.do?operationMode=RETRIEVE", type = "redirect") })
 public class IdentityAction extends BaseAction {
-    public static final String RELOAD_USER = "reload-user";
-    public static final String RELOAD_GROUP = "reload-group";
-    private ProcessEngine processEngine;
+	public static final String RELOAD_USER = "reload-user";
+	public static final String RELOAD_GROUP = "reload-group";
+	private ProcessEngine processEngine;
 	private JdbcTemplate jdbcTemplate;
 	private List<User> users;
 	private User user;
@@ -152,7 +156,7 @@ public class IdentityAction extends BaseAction {
 	}
 
 	public List<User> getUsers() {
-		 return users;
+		return users;
 	}
 
 	public User getUser() {

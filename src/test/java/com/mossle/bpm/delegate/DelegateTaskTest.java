@@ -66,9 +66,11 @@ public class DelegateTaskTest {
 
 		/** 第一次委托 */
 		String userId = "leaderuser";
+		
 		taskService.delegateTask(taskId, userId);
 		taskService.resolveTask(taskId);
 		taskService.addUserIdentityLink(taskId, userId, "delegate");
+		
 
 		/** 第二次委托 */
 		// task.setDelegationState(DelegationState.PENDING);
@@ -78,13 +80,18 @@ public class DelegateTaskTest {
 		taskService.addUserIdentityLink(taskId, userId, "delegate");
 
 		taskService.complete(taskId);
-
 		/**
 		 * 该对象无法查询出委托任务的参与人有那些... 
 		 * TODO 解决无法查询出具体的参与人？
 		 */
+		
 		List<HistoricIdentityLink> historicIdentityLinks = historyService.getHistoricIdentityLinksForTask(taskId);
 		for (HistoricIdentityLink historicIdentityLink : historicIdentityLinks) {
+			System.err.println(historicIdentityLink.getUserId() + " " + historicIdentityLink.getType());
+		}
+		System.out.println("===========邪恶的分割线================");
+		List<HistoricIdentityLink>  historicIdentityLinkLists = historyService.getHistoricIdentityLinksForProcessInstance(processInstance.getId());
+		for (HistoricIdentityLink historicIdentityLink : historicIdentityLinkLists) {
 			System.err.println(historicIdentityLink.getUserId() + " " + historicIdentityLink.getType());
 		}
 
@@ -138,6 +145,6 @@ public class DelegateTaskTest {
 		// identityService.deleteGroup("deptLeader");
 		// identityService.deleteGroup("admin");
 
-		repositoryService.deleteDeployment(deployment.getId(), true);
+//		repositoryService.deleteDeployment(deployment.getId(), true);
 	}
 }

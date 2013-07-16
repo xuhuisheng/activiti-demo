@@ -53,7 +53,7 @@
 	    <td>${item.retries}</td>
 	    <td>${item.exceptionMessage}</td>
         <td>
-		  <a href="job!executeJob.do?id=${item.id}">修改</a>
+		  <a href="job!executeJob.do?id=${item.id}">执行</a>
 		  <a href="job!removeJob.do?id=${item.id}">删除</a>
         </td>
       </tr>

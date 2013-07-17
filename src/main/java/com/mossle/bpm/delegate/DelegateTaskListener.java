@@ -1,19 +1,18 @@
 package com.mossle.bpm.delegate;
 
-import java.util.*;
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
 
-import org.activiti.engine.*;
-import org.activiti.engine.TaskService;
 import org.activiti.engine.delegate.DelegateTask;
 import org.activiti.engine.delegate.TaskListener;
-import org.activiti.engine.impl.persistence.entity.*;
-import org.activiti.engine.task.Task;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.stereotype.Component;
 
+@Component("delegateTaskListener")
 public class DelegateTaskListener implements TaskListener {
     private static Logger logger = LoggerFactory
             .getLogger(DelegateTaskListener.class);
@@ -21,14 +20,15 @@ public class DelegateTaskListener implements TaskListener {
     public static final String SQL_SET_DELEGATE_INFO = "insert into bpm_delegate_history"
             + "(assignee,attorney,delegate_time,task_id,status) values(?,?,now(),?,1)";
 
+    @Autowired
+    private JdbcTemplate jdbcTemplate;
+    
     public void notify(DelegateTask delegateTask) {
         try {
             String eventName = delegateTask.getEventName();
             logger.info("eventName : {}", eventName);
 
             if ("assignment".equals(eventName)) {
-                JdbcTemplate jdbcTemplate = (JdbcTemplate) ApplicationContextHolder
-                        .getBean("jdbcTemplate");
                 List<Map<String, Object>> list = jdbcTemplate
                         .queryForList(SQL_GET_DELEGATE_INFO);
 

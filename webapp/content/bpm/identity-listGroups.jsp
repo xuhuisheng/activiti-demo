@@ -18,7 +18,7 @@
 	<%@include file="/menu-bpm-admin.jsp"%>
 
 	<!-- start of main -->
-    <section id="m-main" class="span10">
+    <section id="m-main" class="span10" style="float:right">
 
 	  <button class="btn" onclick="location.href='identity!inputGroup.do'">添加</button>
 

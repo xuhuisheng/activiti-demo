@@ -1,6 +1,7 @@
 /target/
 /db.properties
 /db.script
+/tools/flyway/target/
 /webapp/WEB-INF/classes/
 /.settings
 /.classpath

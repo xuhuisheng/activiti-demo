@@ -17,7 +17,7 @@
 	<%@include file="/menu-bpm.jsp"%>
 
 	<!-- start of main -->
-    <section id="m-main" class="span10">
+    <section id="m-main" class="span10" style="float:right">
 
       <article class="m-widget">
         <header class="header">

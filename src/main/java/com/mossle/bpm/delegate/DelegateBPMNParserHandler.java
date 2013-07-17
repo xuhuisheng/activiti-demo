@@ -20,7 +20,7 @@ public class DelegateBPMNParserHandler extends UserTaskParseHandler {
 		super.executeParse(bpmnParse, userTask);
 		TaskDefinition taskDefinition = (TaskDefinition) bpmnParse.getCurrentActivity().getProperty(PROPERTY_TASK_DEFINITION);
 		ActivitiListener activitiListener = new ActivitiListener();
-		activitiListener.setEvent(TaskListener.EVENTNAME_CREATE);
+		activitiListener.setEvent(TaskListener.EVENTNAME_ASSIGNMENT);
 		activitiListener.setImplementationType(ImplementationType.IMPLEMENTATION_TYPE_DELEGATEEXPRESSION);
 		activitiListener.setImplementation("#{delegateTaskListener}");
 		taskDefinition.addTaskListener(TaskListener.EVENTNAME_ASSIGNMENT, bpmnParse.getListenerFactory().createDelegateExpressionTaskListener(activitiListener));

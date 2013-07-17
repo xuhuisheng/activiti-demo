@@ -13,12 +13,18 @@
 		<property name="mailServerPort" value="5025" />
 		<property name="history" value="full" />
 
+		<!-- 
 		<property name="postBpmnParseHandlers">
 			<list>
 				<bean class="com.mossle.bpm.delegate.DelegateBPMNParserHandler"/>
 			</list>
 		</property>
-
+ 		-->
+ 		<property name="customDefaultBpmnParseHandlers">
+    	 	<list>
+    	 		<bean class="com.mossle.bpm.delegate.DelegateBPMNParserHandler"/>
+    	 	</list>
+    	 </property>
 		<property name="transactionManager" ref="transactionManager"/>
 		<property name="databaseType" value="${databaseType}"/>
 

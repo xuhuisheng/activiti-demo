@@ -13,6 +13,10 @@
 			<id>Activiti</id>
 			<url>http://maven.alfresco.com/nexus/content/repositories/activiti</url>
 		</repository>
+		<repository>
+			<id>kafeitu</id>
+			<url>http://maven.kafeitu.me/nexus/content/groups/public</url>
+		</repository>
 	</repositories>
 	<dependencies>
 		<!-- 用于测试 -->
@@ -34,7 +38,11 @@
 			<artifactId>activiti-spring</artifactId>
 			<version>${activiti.version}</version>
 		</dependency>
-
+		<dependency>
+			<groupId>org.activiti</groupId>
+			<artifactId>activiti-engine</artifactId>
+			<version>5.13.1-kft</version>
+		</dependency>
 		<dependency>
 			<groupId>javax.servlet</groupId>
 			<artifactId>servlet-api</artifactId>
@@ -170,9 +178,11 @@
 			<artifactId>mysql-connector-java</artifactId>
 			<version>5.1.17</version>
 		</dependency>
-		<!-- 这个maven仓库是没有滴... -->
-	<!-- <dependency> <groupId>com.oracle</groupId> <artifactId>ojdbc14</artifactId> 
-		<version>10.2.0.4.0</version> </dependency> -->
+		<dependency>
+			<groupId>com.oracle</groupId>
+			<artifactId>ojdbc14</artifactId>
+			<version>10.2.0.5.0</version>
+		</dependency>
 	</dependencies>
 
 	<build>

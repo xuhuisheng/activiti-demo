@@ -2,9 +2,9 @@ package com.mossle.bpm.cmd;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 import org.activiti.engine.ActivitiException;
 import org.activiti.engine.history.HistoricActivityInstance;
@@ -22,7 +22,6 @@ import org.activiti.engine.impl.persistence.entity.TaskEntity;
 import org.activiti.engine.impl.pvm.PvmTransition;
 import org.activiti.engine.impl.pvm.process.ActivityImpl;
 import org.activiti.engine.impl.pvm.process.TransitionImpl;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -176,7 +175,7 @@ public class RollbackTaskCmd extends TaskCmd implements Command<Integer> {
         TaskEntity preTask = TaskEntity.create();
 
         //确保当前任务和历史任务的ID是一样的，相当于还原
-        //preTask.setId(preHistoricTaskInstance.getId());
+        preTask.setId(UUID.randomUUID().toString());//防止验证历史出现空指针
         DbSqlSession dbSqlSession = Context.getCommandContext()
                 .getDbSqlSession();
 
@@ -191,7 +190,7 @@ public class RollbackTaskCmd extends TaskCmd implements Command<Integer> {
                     .getActivityBehavior();
             preTask.setTaskDefinition(behavior.getTaskDefinition());
         }
-
+        preTask.setExecution(execution);
         preTask.setAssignee(preHistoricTaskInstance.getAssignee());
         preTask.setName(preHistoricTaskInstance.getName());
         preTask.setOwner(preHistoricTaskInstance.getOwner());

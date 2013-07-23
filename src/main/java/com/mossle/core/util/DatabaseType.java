@@ -40,6 +40,8 @@ public enum DatabaseType {
 			return DB2;
 		} else if (databaseProductName.equals("H2")) {
 			return H2;
+		} else if (databaseProductName.equals("HSQL Database Engine")) {
+			return H2;
 		} 
 		return null;
 	}

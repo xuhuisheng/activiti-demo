@@ -3,7 +3,7 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
-	<bean id="processEngineConfiguration" class="org.activiti.spring.SpringProcessEngineConfiguration">
+	<bean id="processEngineConfiguration" class="org.activiti.spring.SpringProcessEngineConfiguration" depends-on="dbInitService">
 		<property name="dataSource" ref="dataSource" />
 		<!-- Database configurations -->
 		<property name="databaseSchemaUpdate" value="true" />
@@ -26,8 +26,9 @@
     	 	</list>
     	 </property>
 		<property name="transactionManager" ref="transactionManager"/>
-		<property name="databaseType" value="${databaseType}"/>
-
+		
+		<!-- <property name="databaseType" value="${databaseType}"/>  enabled when use hsqldb-->
+		
 		<!-- 生成流程图的字体 -->
         <property name="activityFontName" value="宋体"/>
         <property name="labelFontName" value="宋体"/>

@@ -21,10 +21,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.mossle.core.util.DatabaseType;
 
-
-/** 
- * @author  izerui.com
- */
 @Service
 @Transactional
 public class DbInitService {

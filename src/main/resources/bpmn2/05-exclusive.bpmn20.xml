@@ -26,10 +26,10 @@
     </humanPerformer>
   </userTask>
   <sequenceFlow id='transition-2' sourceRef='taskuser-1' targetRef='taskuser-2'>
-    <conditionExpression xsi:type='tFormalExpression'>${test==&apos;1&apos;}</conditionExpression>
+    <conditionExpression xsi:type='tFormalExpression'>${exclusive==&apos;1&apos;}</conditionExpression>
   </sequenceFlow>
   <sequenceFlow id='transition-3' name='to taskuser-3' sourceRef='taskuser-1' targetRef='taskuser-3'>
-    <conditionExpression xsi:type='tFormalExpression'>${test==&apos;2&apos;}</conditionExpression>
+    <conditionExpression xsi:type='tFormalExpression'>${exclusive==&apos;2&apos;}</conditionExpression>
   </sequenceFlow>
   <userTask id='taskuser-2' name='taskuser-2'>
     <humanPerformer>

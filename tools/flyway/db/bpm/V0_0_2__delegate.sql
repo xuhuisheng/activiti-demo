@@ -21,19 +21,19 @@ create table bpm_delegate_history(
 );
 
 
-CREATE SEQUENCE INDEX_bpm_delegate_info_SEQ INCREMENT BY 1  START WITH 1 NOMAXVALUE NOCYCLE CACHE 10; 
-     
-create or replace trigger trigger_bpm_delegate_info_ID_PK BEFORE
-insert ON  bpm_delegate_info FOR EACH ROW
-begin
-	select INDEX_bpm_delegate_info_SEQ.nextval into:New.id from dual;
-end;
+-- CREATE SEQUENCE INDEX_bpm_delegate_info_SEQ INCREMENT BY 1  START WITH 1 NOMAXVALUE NOCYCLE CACHE 10;
 
-CREATE SEQUENCE INDEX_bpm_delegate_history_SEQ INCREMENT BY 1  START WITH 1 NOMAXVALUE NOCYCLE CACHE 10; 
-     
-create or replace trigger trigger_bpm_delegate_history_ID_PK BEFORE
-insert ON  bpm_delegate_history FOR EACH ROW
-begin
-	select INDEX_bpm_delegate_history_SEQ.nextval into:New.id from dual;
-end;
+-- create or replace trigger trigger_bpm_delegate_info_ID_PK BEFORE
+-- insert ON  bpm_delegate_info FOR EACH ROW
+-- begin
+--	select INDEX_bpm_delegate_info_SEQ.nextval into:New.id from dual;
+-- end;
+
+-- CREATE SEQUENCE INDEX_bpm_delegate_history_SEQ INCREMENT BY 1  START WITH 1 NOMAXVALUE NOCYCLE CACHE 10;
+
+-- create or replace trigger trigger_bpm_delegate_history_ID_PK BEFORE
+-- insert ON  bpm_delegate_history FOR EACH ROW
+-- begin
+--	select INDEX_bpm_delegate_history_SEQ.nextval into:New.id from dual;
+-- end;
 

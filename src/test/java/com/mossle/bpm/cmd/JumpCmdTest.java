@@ -38,7 +38,7 @@ public class JumpCmdTest {
 	private Deployment deployment;
 
 	@Test
-	public void testRollBack() throws Exception {
+	public void testJump() throws Exception {
 		// 发起任务
 		ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("parallel");
 		assertNotNull(processInstance);

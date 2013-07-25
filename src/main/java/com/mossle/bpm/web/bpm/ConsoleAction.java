@@ -2,18 +2,10 @@ package com.mossle.bpm.web.bpm;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
-
 import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
-
-import com.mossle.bpm.cmd.JumpCmd;
-import com.mossle.bpm.cmd.ListActivityCmd;
-import com.mossle.bpm.cmd.ProcessDefinitionDiagramCmd;
-
-import com.mossle.core.struts2.BaseAction;
-import com.mossle.core.util.IoUtils;
 
 import org.activiti.engine.HistoryService;
 import org.activiti.engine.ProcessEngine;
@@ -25,17 +17,20 @@ import org.activiti.engine.history.HistoricProcessInstance;
 import org.activiti.engine.history.HistoricTaskInstance;
 import org.activiti.engine.impl.ServiceImpl;
 import org.activiti.engine.impl.interceptor.Command;
-import org.activiti.engine.impl.interceptor.Command;
 import org.activiti.engine.impl.interceptor.CommandExecutor;
 import org.activiti.engine.repository.ProcessDefinition;
 import org.activiti.engine.runtime.ProcessInstance;
 import org.activiti.engine.task.Task;
-
+import org.apache.commons.io.IOUtils;
 import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.convention.annotation.Results;
-
 import org.springframework.jdbc.core.JdbcTemplate;
+
+import com.mossle.bpm.cmd.JumpCmd;
+import com.mossle.bpm.cmd.ListActivityCmd;
+import com.mossle.bpm.cmd.ProcessDefinitionDiagramCmd;
+import com.mossle.core.struts2.BaseAction;
 
 @Results({ @Result(name = ConsoleAction.RELOAD_PROCESS_DEFINITION, location = "console!listProcessDefinitions.do?operationMode=RETRIEVE", type = "redirect"),
 		@Result(name = ConsoleAction.RELOAD_PROCESS_INSTANCE, location = "console!listProcessInstances.do?operationMode=RETRIEVE", type = "redirect"),
@@ -125,12 +120,13 @@ public class ConsoleAction extends BaseAction {
 		HttpServletResponse response = ServletActionContext.getResponse();
 		response.setContentType("image/png");
 
-		int len = 0;
-		byte[] b = new byte[1024];
-
-		while ((len = is.read(b, 0, 1024)) != -1) {
-			response.getOutputStream().write(b, 0, len);
-		}
+		IOUtils.copy(is, response.getOutputStream());
+//		int len = 0;
+//		byte[] b = new byte[1024];
+//
+//		while ((len = is.read(b, 0, 1024)) != -1) {
+//			response.getOutputStream().write(b, 0, len);
+//		}
 	}
 
 	public void viewXml() throws Exception {
@@ -139,7 +135,7 @@ public class ConsoleAction extends BaseAction {
 		String resourceName = processDefinition.getResourceName();
 		InputStream resourceAsStream = repositoryService.getResourceAsStream(processDefinition.getDeploymentId(), resourceName);
 		ServletActionContext.getResponse().setContentType("text/xml;charset=UTF-8");
-		IoUtils.copyStream(resourceAsStream, ServletActionContext.getResponse().getOutputStream());
+		IOUtils.copy(resourceAsStream, ServletActionContext.getResponse().getOutputStream());
 	}
 
 	/**

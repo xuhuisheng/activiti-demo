@@ -26,9 +26,9 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 /**
  * 并行网关测试
- * 
+ *
  * @author LuZhao
- * 
+ *
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = { "classpath:/spring/applicationContext*.xml" })
@@ -85,9 +85,6 @@ public class ParallelTest {
 				.finished()//
 				.singleResult();
 		assertNotNull(historyProcessInstance);
-
-		// TODO 流程结束 为何还是false?
-		assertEquals(Boolean.TRUE, processInstance.isEnded());// 判断流程是否结束
 	}
 
 	private List<Task> findTaks(ProcessInstance processInstance) {

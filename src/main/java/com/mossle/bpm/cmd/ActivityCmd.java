@@ -91,9 +91,15 @@ public abstract class ActivityCmd {
                     + execution.getId() + ",activityName=" + activityId);
         }
 
-        if (list.size() != 1) {
-            throw new ActivitiException("获取历史任务实例出错，原因：存在多个历史任务实例。executionId="
-                    + "" + execution.getId() + ",activityName=" + activityId);
+        if (list.size() > 1) {
+            // throw new ActivitiException("获取历史任务实例出错，原因：存在多个历史任务实例。executionId="
+            //        + "" + execution.getId() + ",activityName=" + activityId);
+			list = Context.getCommandContext()
+                .getDbSqlSession().createHistoricTaskInstanceQuery()
+                .executionId(execution.getId()).taskDefinitionKey(activityId)
+				.orderByHistoricActivityInstanceId()
+				.desc()
+                .list();
         }
 
         return (HistoricTaskInstanceEntity) list.get(0);

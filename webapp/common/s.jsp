@@ -14,3 +14,6 @@
     <script type="text/javascript" src="${ctx}/s/jquery/jquery-migrate-1.1.0.min.js"></script>
 	<!-- bootstrap -->
     <script type="text/javascript" src="${ctx}/s/bootstrap/js/bootstrap.min.js"></script>
+	<!-- bootstrap datepicker -->
+    <link href="${ctx}/s/bootstrap-datepicker/datepicker.css" rel="stylesheet">
+    <script type="text/javascript" src="${ctx}/s/bootstrap-datepicker/bootstrap-datepicker.js"></script>

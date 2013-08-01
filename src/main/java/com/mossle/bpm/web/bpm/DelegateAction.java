@@ -1,9 +1,13 @@
 package com.mossle.bpm.web.bpm;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
 import org.activiti.engine.ProcessEngine;
+import org.activiti.engine.repository.ProcessDefinition;
 import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.convention.annotation.Results;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -14,9 +18,9 @@ import com.mossle.core.util.SpringSecurityUtils;
 
 /**
  * 自动委托
- * 
+ *
  * @author LuZhao
- * 
+ *
  */
 @Results({ @Result(name = DelegateAction.RELOAD, location = "delegate!listMyDelegateInfos.do?operationMode=RETRIEVE", type = "redirect") })
 public class DelegateAction extends BaseAction {
@@ -28,11 +32,15 @@ public class DelegateAction extends BaseAction {
 	private Long id;
 	private List<Map<String, Object>> delegateInfos;
 	private List<Map<String, Object>> delegateHistories;
+	private String startTime;
+	private String endTime;
+	private String processDefinitionId;
+	private List<ProcessDefinition> processDefinitions;
 
 	/**
-	 * 自动委托列表 
+	 * 自动委托列表
 	 * TODO 可以指定多个自动委托人？
-	 * 
+	 *
 	 * @return
 	 */
 	public String listMyDelegateInfos() {
@@ -42,7 +50,7 @@ public class DelegateAction extends BaseAction {
 
 	/**
 	 * 删除自动委托
-	 * 
+	 *
 	 * @return
 	 */
 	public String removeDelegateInfo() {
@@ -53,21 +61,41 @@ public class DelegateAction extends BaseAction {
 	// ~ ======================================================================
 	/**
 	 * 自动委托页面
-	 * 
+	 *
 	 * @return
 	 */
 	public String prepareAutoDelegate() {
+		processDefinitions = processEngine
+			.getRepositoryService()
+			.createProcessDefinitionQuery()
+			.list();
 		return "prepareAutoDelegate";
 	}
 
 	/**
 	 * 自动委托
-	 * 
+	 *
 	 * @return
 	 */
-	public String autoDelegate() {
+	public String autoDelegate() throws Exception {
 		String username = SpringSecurityUtils.getCurrentUsername();
-		delegateService.addDelegateInfo(username, attorney);
+		DateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd");
+		Date startDate = null;
+		try {
+			startDate = dateFormat.parse(startTime);
+		} catch(Exception ex) {
+			//
+		}
+		Date endDate = null;
+		try {
+			endDate = dateFormat.parse(endTime);
+		} catch(Exception ex) {
+			//
+		}
+		if (processDefinitionId != null && "".equals(processDefinitionId.trim())) {
+			processDefinitionId = null;
+		}
+		delegateService.addDelegateInfo(username, attorney, startDate, endDate, processDefinitionId);
 
 		return RELOAD;
 	}
@@ -81,10 +109,10 @@ public class DelegateAction extends BaseAction {
 
 		return "listDelegateInfos";
 	}
-	
+
 	/**
 	 * 自动委托历史
-	 * 
+	 *
 	 * @return
 	 */
 	public String listDelegateHistories() {
@@ -102,6 +130,10 @@ public class DelegateAction extends BaseAction {
 		this.jdbcTemplate = jdbcTemplate;
 	}
 
+	public void setProcessEngine(ProcessEngine processEngine) {
+		this.processEngine = processEngine;
+	}
+
 	public void setAttorney(String attorney) {
 		this.attorney = attorney;
 	}
@@ -116,5 +148,21 @@ public class DelegateAction extends BaseAction {
 
 	public List<Map<String, Object>> getDelegateHistories() {
 		return delegateHistories;
+	}
+
+	public void setStartTime(String startTime) {
+		this.startTime = startTime;
+	}
+
+	public void setEndTime(String endTime) {
+		this.endTime = endTime;
+	}
+
+	public void setProcessDefinitionId(String processDefinitionId) {
+		this.processDefinitionId = processDefinitionId;
+	}
+
+	public List<ProcessDefinition> getProcessDefinitions() {
+		return processDefinitions;
 	}
 }

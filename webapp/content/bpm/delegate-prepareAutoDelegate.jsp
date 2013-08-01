@@ -8,6 +8,11 @@
     <%@include file="/common/meta.jsp"%>
     <title><spring:message code="demo.demo.input.title" text="编辑"/></title>
     <%@include file="/common/s.jsp"%>
+	<script type="text/javascript">
+$(function() {
+    $('.datepicker').datepicker({format:'yyyy-mm-dd'});
+});
+	</script>
   </head>
 
   <body>
@@ -37,19 +42,30 @@
   <div class="control-group">
     <label class="control-label">开始时间</label>
 	<div class="controls">
-	  <input type="text" name="startTime" value="">
+      <div class="input-append datepicker date" style="padding-left: 0px;">
+	    <input type="text" name="startTime" value="" readonly style="background-color:white;cursor:default; width: 175px;">
+	    <span class="add-on"><i class="icon-calendar"></i></span>
+	  </div>
     </div>
   </div>
   <div class="control-group">
     <label class="control-label">结束时间</label>
 	<div class="controls">
-	  <input type="text" name="endTime" value="">
+      <div class="input-append datepicker date" style="padding-left: 0px;">
+	    <input type="text" name="endTime" value="" readonly style="background-color:white;cursor:default; width: 175px;">
+	    <span class="add-on"><i class="icon-calendar"></i></span>
+	  </div>
     </div>
   </div>
   <div class="control-group">
     <label class="control-label">流程定义</label>
 	<div class="controls">
-	  <input type="text" name="endTime" value="">
+	  <select name="processDefinitionId">
+	    <option value=""></option>
+		<s:iterator value="processDefinitions" var="item">
+	    <option value="${item.id}">${item.name}</option>
+		</s:iterator>
+	  </select>
     </div>
   </div>
   <div class="control-group">

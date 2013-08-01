@@ -62,7 +62,6 @@
 		  </s:else>
 		</td>
         <td>
-          <a href="console!removeProcessDefinition.do?processDefinitionId=${item.id}">删除</a>
           <a href="console!graphProcessDefinition.do?processDefinitionId=${item.id}" target="_blank">流程图</a>
           <a href="console!viewXml.do?processDefinitionId=${item.id}" target="_blank">查看XML</a>
           <a href="${scopePrefix}/diagram-viewer/index.html?processDefinitionId=${item.id}" target="_blank">diagram-viewer</a>

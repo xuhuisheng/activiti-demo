@@ -48,12 +48,10 @@ public class AutoDeployer {
 			}
 
 			try {
-				if (checkDeploymentUpToDate(resourceName, resource.lastModified())) {
-					logger.info("skip : {}", resourceName);
-					continue;
-				}
-
-				DeploymentBuilder deploymentBuilder = repositoryService.createDeployment().name(resourceName);
+				DeploymentBuilder deploymentBuilder = repositoryService
+					.createDeployment()
+					.enableDuplicateFiltering()
+					.name(resourceName);
 				if ( resourceName.endsWith(".bar")
 					|| resourceName.endsWith(".zip")
 					|| resourceName.endsWith(".jar") ) {

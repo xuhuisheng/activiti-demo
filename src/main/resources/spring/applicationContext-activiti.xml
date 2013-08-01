@@ -38,10 +38,14 @@
             </list>
         </property>
 
-        <!-- 全局监听器
-        <property name="globalTaskListener" >
-            <bean class="me.kafeitu.demo.activiti.activiti.listener.GlobalTaskListener" />
-        </property> -->
+        <!-- 自动部署 -->
+		<!--
+        <property name="deploymentResources">
+            <list>
+                <value>classpath*:/bpmn2/*</value>
+            </list>
+        </property>
+		-->
 	</bean>
 
 	<bean id="processEngine" class="org.activiti.spring.ProcessEngineFactoryBean">

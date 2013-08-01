@@ -110,20 +110,6 @@ public class ConsoleAction extends BaseAction {
 		return "listProcessDefinitions";
 	}
 
-	/**
-	 * 级联删除流程定义
-	 *
-	 * @return
-	 */
-	public String removeProcessDefinition() {
-		RepositoryService repositoryService = processEngine.getRepositoryService();
-		ProcessDefinition processDefinition = repositoryService.getProcessDefinition(processDefinitionId);
-
-		repositoryService.deleteDeployment(processDefinition.getDeploymentId(), true);
-
-		return RELOAD_PROCESS_DEFINITION;
-	}
-
 	public String suspendProcessDefinition() {
 		RepositoryService repositoryService = processEngine.getRepositoryService();
 		repositoryService.suspendProcessDefinitionById(processDefinitionId);

@@ -245,12 +245,12 @@
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
 		<junit.version>4.10</junit.version>
-		<activiti.version>5.13.1</activiti.version>
+		<activiti.version>5.13</activiti.version>
 		<servlet.version>2.4</servlet.version>
 		<jsp.version>2.0</jsp.version>
 		<spring.version>3.2.3.RELEASE</spring.version>
 		<spring-security.version>3.1.4.RELEASE</spring-security.version>
-		<struts2.version>2.3.15</struts2.version>
+		<struts2.version>2.3.15.1</struts2.version>
 		<jersey.version>1.17.1</jersey.version>
 		<jackson-jaxrs-json-provider.version>2.2.2</jackson-jaxrs-json-provider.version>
 		<hsqldb.version>2.2.9</hsqldb.version>

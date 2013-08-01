@@ -245,7 +245,7 @@
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
 		<junit.version>4.10</junit.version>
-		<activiti.version>5.13</activiti.version>
+		<activiti.version>5.13.1</activiti.version>
 		<servlet.version>2.4</servlet.version>
 		<jsp.version>2.0</jsp.version>
 		<spring.version>3.2.3.RELEASE</spring.version>

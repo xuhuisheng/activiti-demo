@@ -15,6 +15,7 @@
 			  <li class="m-icn-add-user"><a href="${scopePrefix}/bpm/console!listProcessDefinitions.do">流程定义</a></li>
 			  <li class="m-icn-add-user"><a href="${scopePrefix}/bpm/console!listProcessInstances.do">流程实例</a></li>
 			  <li class="m-icn-add-user"><a href="${scopePrefix}/bpm/console!listTasks.do">任务</a></li>
+			  <li class="m-icn-add-user"><a href="${scopePrefix}/bpm/console!listDeployments.do">部署</a></li>
             </ul>
           </div>
 		</div>

@@ -18,6 +18,7 @@ import org.activiti.engine.history.HistoricTaskInstance;
 import org.activiti.engine.impl.ServiceImpl;
 import org.activiti.engine.impl.interceptor.Command;
 import org.activiti.engine.impl.interceptor.CommandExecutor;
+import org.activiti.engine.repository.Deployment;
 import org.activiti.engine.repository.ProcessDefinition;
 import org.activiti.engine.runtime.ProcessInstance;
 import org.activiti.engine.task.Task;
@@ -32,10 +33,13 @@ import com.mossle.bpm.cmd.ListActivityCmd;
 import com.mossle.bpm.cmd.ProcessDefinitionDiagramCmd;
 import com.mossle.core.struts2.BaseAction;
 
-@Results({ @Result(name = ConsoleAction.RELOAD_PROCESS_DEFINITION, location = "console!listProcessDefinitions.do?operationMode=RETRIEVE", type = "redirect"),
+@Results({
+		@Result(name = ConsoleAction.RELOAD_DEPLOYMENT, location = "console!listDeployments.do?operationMode=RETRIEVE", type = "redirect"),
+		@Result(name = ConsoleAction.RELOAD_PROCESS_DEFINITION, location = "console!listProcessDefinitions.do?operationMode=RETRIEVE", type = "redirect"),
 		@Result(name = ConsoleAction.RELOAD_PROCESS_INSTANCE, location = "console!listProcessInstances.do?operationMode=RETRIEVE", type = "redirect"),
 		@Result(name = ConsoleAction.RELOAD_TASK, location = "console!listTasks.do?operationMode=RETRIEVE", type = "redirect") })
 public class ConsoleAction extends BaseAction {
+	public static final String RELOAD_DEPLOYMENT = "reload-deployment";
 	public static final String RELOAD_PROCESS_DEFINITION = "reload-process-definition";
 	public static final String RELOAD_PROCESS_INSTANCE = "reload-process-instance";
 	public static final String RELOAD_TASK = "reload-task";
@@ -56,6 +60,30 @@ public class ConsoleAction extends BaseAction {
 	private String taskId;
 	private List<HistoricActivityInstance> historicActivityInstances;
 	private List<HistoricTaskInstance> historicTaskInstances;
+	private List<Deployment> deployments;
+	private String deploymentId;
+	private List<String> deploymentResourceNames;
+
+	/**
+	 * 部署列表.
+	 */
+	public String listDeployments() {
+		RepositoryService repositoryService = processEngine.getRepositoryService();
+		deployments = repositoryService.createDeploymentQuery().list();
+		return "listDeployments";
+	}
+
+	public String listDeploymentResourceNames() {
+		RepositoryService repositoryService = processEngine.getRepositoryService();
+		deploymentResourceNames = repositoryService.getDeploymentResourceNames(deploymentId);
+		return "listDeploymentResourceNames";
+	}
+
+	public String removeDeployment() {
+		RepositoryService repositoryService = processEngine.getRepositoryService();
+		repositoryService.deleteDeployment(deploymentId, true);
+		return RELOAD_DEPLOYMENT;
+	}
 
 	/**
 	 * 新建流程.
@@ -84,7 +112,7 @@ public class ConsoleAction extends BaseAction {
 
 	/**
 	 * 级联删除流程定义
-	 * 
+	 *
 	 * @return
 	 */
 	public String removeProcessDefinition() {
@@ -296,5 +324,17 @@ public class ConsoleAction extends BaseAction {
 
 	public List<HistoricTaskInstance> getHistoricTaskInstances() {
 		return historicTaskInstances;
+	}
+
+	public List<Deployment> getDeployments() {
+		return deployments;
+	}
+
+	public void setDeploymentId(String deploymentId) {
+		this.deploymentId = deploymentId;
+	}
+
+	public List<String> getDeploymentResourceNames() {
+		return deploymentResourceNames;
 	}
 }

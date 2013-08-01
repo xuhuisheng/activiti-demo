@@ -13,13 +13,6 @@
 		<property name="mailServerPort" value="5025" />
 		<property name="history" value="full" />
 
-		<!-- 
-		<property name="postBpmnParseHandlers">
-			<list>
-				<bean class="com.mossle.bpm.delegate.DelegateBPMNParserHandler"/>
-			</list>
-		</property>
- 		-->
  		<property name="customDefaultBpmnParseHandlers">
     	 	<list>
     	 		<bean class="com.mossle.bpm.delegate.DelegateBPMNParserHandler"/>
@@ -28,7 +21,7 @@
 		<property name="transactionManager" ref="transactionManager"/>
 		<!-- (databaseType 不用修改,即使连接其他类型数据库)  act引擎会自动替换成相应的type,这里加上是因为act不识别hsqldb类型,故直接映射成H2-->
 		<property name="databaseType" value="h2"/>
-		
+
 		<!-- 生成流程图的字体 -->
         <property name="activityFontName" value="宋体"/>
         <property name="labelFontName" value="宋体"/>
@@ -37,13 +30,6 @@
         <property name="processDefinitionCache">
             <bean class="me.kafeitu.demo.activiti.util.cache.DistributedCache" />
         </property>-->
-
-        <!-- 自动部署 -->
-        <property name="deploymentResources">
-            <list>
-                <value>classpath*:/bpmn2/*</value>
-            </list>
-        </property>
 
         <!-- 自定义表单字段类型 -->
         <property name="customFormTypes">
@@ -69,4 +55,14 @@
     <bean id="historyService" factory-bean="processEngine" factory-method="getHistoryService"/>
     <bean id="managementService" factory-bean="processEngine" factory-method="getManagementService"/>
 	<bean id="commandExecutor" factory-bean="processEngineConfiguration" factory-method="getCommandExecutorTxRequired"/>
+
+	<!-- 自动部署 -->
+	<bean id="autoDeployer" class="com.mossle.bpm.support.AutoDeployer">
+		<property name="processEngine" ref="processEngine"/>
+        <property name="deploymentResources">
+            <list>
+                <value>classpath*:/bpmn2/*</value>
+            </list>
+        </property>
+	</bean>
 </beans>

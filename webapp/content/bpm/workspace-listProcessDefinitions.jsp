@@ -6,7 +6,7 @@
 
   <head>
     <%@include file="/common/meta.jsp"%>
-    <title><spring:message code="dev.demo.list.title" text="流程列表"/></title>
+    <title>流程列表</title>
     <%@include file="/common/s.jsp"%>
   </head>
 
@@ -21,7 +21,7 @@
 
       <article class="m-widget">
         <header class="header">
-		  <h4 class="title"><spring:message code="demo.demo.list.title" text="列表"/></h4>
+		  <h4 class="title">列表</h4>
 		</header>
 		<div class="content">
 

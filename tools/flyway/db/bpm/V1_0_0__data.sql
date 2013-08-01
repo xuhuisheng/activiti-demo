@@ -4,3 +4,7 @@ insert into act_id_user(ID_,REV_,FIRST_,LAST_,EMAIL_,PWD_,PICTURE_ID_) values('u
 insert into act_id_user(ID_,REV_,FIRST_,LAST_,EMAIL_,PWD_,PICTURE_ID_) values('hruser',1,'hruser','Mossle','hruser.mossle@gmail.com','111111',NULL);
 insert into act_id_user(ID_,REV_,FIRST_,LAST_,EMAIL_,PWD_,PICTURE_ID_) values('leaduser',1,'leaduser','Mossle','leaduser.mossle@gmail.com','111111',NULL);
 
+insert into act_id_group(id_,rev_,name_,type_) values('employee',1,'employee','group');
+
+insert into act_id_membership(user_id_,group_id_) values('admin','employee');
+insert into act_id_membership(user_id_,group_id_) values('user','employee');

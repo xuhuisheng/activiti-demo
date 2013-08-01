@@ -73,7 +73,7 @@
               <span class="title">异步消息管理</span>
             </a>
           </div>
-          <div id="collapse-job" class="accordion-body collapse ${currentMenu == 'user' ? 'in' : ''}">
+          <div id="collapse-job" class="accordion-body collapse ${currentMenu == 'job' ? 'in' : ''}">
             <ul class="accordion-inner nav nav-list">
 			  <li class="m-icn-add-user"><a href="${scopePrefix}/bpm/job!list.do">异步消息管理</a></li>
             </ul>

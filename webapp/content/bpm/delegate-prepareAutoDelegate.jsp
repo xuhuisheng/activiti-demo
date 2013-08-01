@@ -35,6 +35,24 @@
     </div>
   </div>
   <div class="control-group">
+    <label class="control-label">开始时间</label>
+	<div class="controls">
+	  <input type="text" name="startTime" value="">
+    </div>
+  </div>
+  <div class="control-group">
+    <label class="control-label">结束时间</label>
+	<div class="controls">
+	  <input type="text" name="endTime" value="">
+    </div>
+  </div>
+  <div class="control-group">
+    <label class="control-label">流程定义</label>
+	<div class="controls">
+	  <input type="text" name="endTime" value="">
+    </div>
+  </div>
+  <div class="control-group">
     <div class="controls">
       <button id="submitButton" type="submit" class="btn"><spring:message code='core.input.save' text='保存'/></button>
 	  &nbsp;

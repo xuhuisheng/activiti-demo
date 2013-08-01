@@ -2,6 +2,7 @@ ACTIVITI-DEMO README
 =====================
 http://www.mossle.com
 
+[![Build Status](https://travis-ci.org/xuhuisheng/activiti-demo.png)](https://travis-ci.org/xuhuisheng/activiti-demo)
 
 环境
 ----

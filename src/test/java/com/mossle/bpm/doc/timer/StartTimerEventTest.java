@@ -38,7 +38,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import com.sun.tools.internal.jxc.gen.config.Config;
 
 /**
  * 定时器事件, 对定时器进行测试

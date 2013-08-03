@@ -8,10 +8,10 @@
   typeLanguage='http://www.w3.org/2001/XMLSchema'
   expressionLanguage='http://www.w3.org/1999/XPath'
   targetNamespace='http://www.mossle.com'>
-<process id='exclusive' name='Exclusive'>
+<process id='exclusive' name='不使用gateway的隐形排他功能'>
   <startEvent id='startnone-1' name='startnone-1' activiti:initiator='initiator'>
     <extensionElements>
-    <activiti:formProperty id='exclusive' name='隐形exclusive' required='true' type='enum'>
+    <activiti:formProperty id='exclusive' name='隐性exclusive' required='true' type='enum'>
     <activiti:value id='1' name='1'/>
     <activiti:value id='2' name='2'/>
     </activiti:formProperty>

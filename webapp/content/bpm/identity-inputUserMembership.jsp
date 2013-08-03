@@ -7,7 +7,7 @@
 
   <head>
     <%@include file="/common/meta.jsp"%>
-    <title><spring:message code="demo.demo.input.title" text="编辑"/></title>
+    <title>编辑</title>
     <%@include file="/common/s.jsp"%>
   </head>
 
@@ -22,7 +22,7 @@
 
       <article class="m-widget">
         <header class="header">
-		  <h4 class="title"><spring:message code="demo.demo.input.title" text="编辑"/></h4>
+		  <h4 class="title">编辑</h4>
 		</header>
 
 		<div class="content content-inner">
@@ -46,9 +46,9 @@
   </div>
   <div class="control-group">
     <div class="controls">
-      <button id="submitButton" type="submit" class="btn"><spring:message code='core.input.save' text='保存'/></button>
+      <button id="submitButton" type="submit" class="btn">保存</button>
 	  &nbsp;
-      <button type="button" onclick="history.back();" class="btn"><spring:message code='core.input.back' text='返回'/></button>
+      <button type="button" onclick="history.back();" class="btn">返回</button>
     </div>
   </div>
 </form>

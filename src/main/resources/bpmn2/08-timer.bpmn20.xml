@@ -4,7 +4,7 @@
 	xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC"
 	xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" typeLanguage="http://www.w3.org/2001/XMLSchema"
 	expressionLanguage="http://www.w3.org/1999/XPath" targetNamespace="http://www.activiti.org/test">
-	<process id="process1" name="process1" isExecutable="true">
+	<process id="timer" name="演示超时处理" isExecutable="true">
 		<startEvent id="startevent2" name="Start"></startEvent>
 		<userTask id="usertask1" name="编写报告" activiti:assignee="user"></userTask>
 		<userTask id="usertask2" name="成员维护" activiti:assignee="user"></userTask>
@@ -14,7 +14,14 @@
 				<timeDate>PT1H</timeDate>
 			</timerEventDefinition>
 		</boundaryEvent>
-		<userTask id="usertask3" name="经理审批" activiti:assignee="admin"></userTask>
+		<userTask id="usertask3" name="经理审批" activiti:assignee="admin">
+			<extensionElements>
+				<activiti:formProperty id='auditResult' name='意见' required='true' type='enum' writable='true'>
+				<activiti:value id='true' name='同意'/>
+				<activiti:value id='false' name='不同意'/>
+				</activiti:formProperty>
+			</extensionElements>
+		</userTask>
 		<exclusiveGateway id="exclusivegateway1" name="Exclusive Gateway"></exclusiveGateway>
 		<endEvent id="endevent1" name="End"></endEvent>
 		<userTask id="usertask4" name="通知经理" activiti:assignee="admin"></userTask>
@@ -28,11 +35,11 @@
 		<sequenceFlow id="flow6" sourceRef="usertask3" targetRef="exclusivegateway1"></sequenceFlow>
 		<sequenceFlow id="flow8" sourceRef="exclusivegateway1"
 			targetRef="endevent1">
-			<conditionExpression xsi:type="tFormalExpression"><![CDATA[${spjg == 'false'}]]></conditionExpression>
+			<conditionExpression xsi:type="tFormalExpression"><![CDATA[${auditResult == 'true'}]]></conditionExpression>
 		</sequenceFlow>
 		<sequenceFlow id="flow7" sourceRef="exclusivegateway1"
 			targetRef="usertask2">
-			<conditionExpression xsi:type="tFormalExpression"><![CDATA[${spjg == 'true'}]]></conditionExpression>
+			<conditionExpression xsi:type="tFormalExpression"><![CDATA[${auditResult == 'false'}]]></conditionExpression>
 		</sequenceFlow>
 		<sequenceFlow id="flow4" sourceRef="usertask2" targetRef="usertask3"></sequenceFlow>
 	</process>

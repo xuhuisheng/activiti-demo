@@ -62,7 +62,7 @@
         <omgdi:waypoint x="255.0" y="275.0"></omgdi:waypoint>
         <omgdi:waypoint x="305.0" y="275.0"></omgdi:waypoint>
         <bpmndi:BPMNLabel>
-          <omgdc:Bounds height="14.0" width="100.0" x="10.0" y="0.0"></omgdc:Bounds>
+          <omgdc:Bounds height="14.0" width="64.0" x="-13.0" y="0.0"></omgdc:Bounds>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="transition-8" id="BPMNEdge_transition-8">

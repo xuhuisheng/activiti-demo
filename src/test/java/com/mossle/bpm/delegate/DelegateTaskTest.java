@@ -82,7 +82,11 @@ public class DelegateTaskTest {
 		taskService.complete(taskId);
 		/**
 		 * 该对象无法查询出委托任务的参与人有那些...
-		 * TODO 解决无法查询出具体的参与人？
+		 * 解决无法查询出具体的参与人？
+		 * 	已经解决
+		 * 		解决方案：每次委托自己手动增加信息	
+		 * 		taskService.addUserIdentityLink(taskId, userId, "delegate");
+
 		 */
 
 		List<HistoricIdentityLink> historicIdentityLinks = historyService.getHistoricIdentityLinksForTask(taskId);

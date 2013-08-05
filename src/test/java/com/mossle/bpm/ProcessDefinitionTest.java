@@ -21,6 +21,7 @@ import org.activiti.engine.repository.ProcessDefinition;
 import org.activiti.engine.runtime.ProcessInstance;
 import org.activiti.engine.task.Task;
 import org.activiti.engine.impl.persistence.deploy.DeploymentManager;
+import org.activiti.engine.impl.RepositoryServiceImpl;
 
 import org.junit.After;
 import static org.junit.Assert.*;
@@ -55,7 +56,9 @@ public class ProcessDefinitionTest {
 		System.out.println("processDefinitions : " + processDefinitions);
 		for (ProcessDefinition processDefinition : processDefinitions) {
 			System.out.println("processDefinition : " + processDefinition);
-			ProcessDefinitionEntity pdef = commandExecutor.execute(new GetProcessDefinitionCmd(processDefinition.getId()));
+			// ProcessDefinitionEntity pdef = commandExecutor.execute(new GetProcessDefinitionCmd(processDefinition.getId()));
+			ProcessDefinitionEntity pdef = (ProcessDefinitionEntity)
+				((RepositoryServiceImpl) repositoryService).getDeployedProcessDefinition(processDefinition.getId());
 			List<ActivityImpl> activities = pdef.getActivities();
 			System.out.println(activities);
 

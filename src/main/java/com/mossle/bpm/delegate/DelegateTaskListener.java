@@ -25,6 +25,9 @@ public class DelegateTaskListener extends DefaultTaskListener {
 		String assignee = delegateTask.getAssignee();
 		String processDefinitionId = delegateTask.getProcessDefinitionId();
 		DelegateInfo delegateInfo = delegateService.getDelegateInfo(assignee, processDefinitionId);
+		if (delegateInfo == null) {
+			return;
+		}
 
 		String attorney = delegateInfo.getAttorney();
 		delegateTask.setAssignee(attorney);

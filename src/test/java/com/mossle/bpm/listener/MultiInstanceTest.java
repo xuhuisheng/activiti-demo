@@ -74,9 +74,11 @@ public class MultiInstanceTest {
 		assertEquals(Boolean.FALSE, processInstance.isEnded());// 判断流程是否结束
 
 		List<Task> tasks = findTaks(processInstance);
-		assertEquals(2, tasks.size());
+		assertEquals(4, tasks.size());
 		assertEquals("会签", tasks.get(0).getName());
 		assertEquals("会签", tasks.get(1).getName());
+		assertEquals("会签", tasks.get(2).getName());
+		assertEquals("会签", tasks.get(3).getName());
 	}
 
 	private List<Task> findTaks(ProcessInstance processInstance) {

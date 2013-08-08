@@ -7,7 +7,7 @@ import org.activiti.engine.impl.bpmn.parser.factory.DefaultActivityBehaviorFacto
 public class CustomBpmnParser extends BpmnParser{
 
 	public void setActivityBehaviorFactory(ActivityBehaviorFactory activityBehaviorFactory) {
-		// TODO Auto-generated method stub
+		// TODO 没有你.serviceTask怎么办
 		((DefaultActivityBehaviorFactory)activityBehaviorFactory).setExpressionManager(expressionManager);
 		super.setActivityBehaviorFactory(activityBehaviorFactory);
 	}

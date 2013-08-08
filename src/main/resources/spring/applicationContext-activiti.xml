@@ -8,7 +8,7 @@
 		<!-- Database configurations -->
 		<property name="databaseSchemaUpdate" value="ignore" />
 		<!-- job executor configurations -->
-		<property name="jobExecutorActivate" value="true" />
+		<property name="jobExecutorActivate" value="false" />
 		<!-- mail server configurations -->
 		<property name="mailServerPort" value="5025" />
 		<property name="history" value="full" />

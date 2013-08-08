@@ -12,7 +12,7 @@ import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.convention.annotation.Results;
 import org.springframework.jdbc.core.JdbcTemplate;
 
-import com.mossle.bpm.service.DelegateService;
+import com.mossle.bpm.delegate.DelegateService;
 import com.mossle.core.struts2.BaseAction;
 import com.mossle.core.util.SpringSecurityUtils;
 

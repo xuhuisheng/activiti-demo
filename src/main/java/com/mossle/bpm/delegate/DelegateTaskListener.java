@@ -3,6 +3,7 @@ package com.mossle.bpm.delegate;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import javax.annotation.Resource;
 
 import org.activiti.engine.delegate.DelegateTask;
 import org.activiti.engine.delegate.TaskListener;
@@ -13,73 +14,25 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 
 @Component("delegateTaskListener")
-public class DelegateTaskListener implements TaskListener {
+public class DelegateTaskListener extends DefaultTaskListener {
     private static Logger logger = LoggerFactory
             .getLogger(DelegateTaskListener.class);
-    public static final String SQL_GET_DELEGATE_INFO = "select * from bpm_delegate_info where status=1";
-    public static final String SQL_SET_DELEGATE_INFO = "insert into bpm_delegate_history"
-            + "(assignee,attorney,delegate_time,task_id,status) values(?,?,now(),?,1)";
 
-    @Autowired
-    private JdbcTemplate jdbcTemplate;
-    
-    public void notify(DelegateTask delegateTask) {
-        try {
-            String eventName = delegateTask.getEventName();
-            logger.info("eventName : {}", eventName);
+	private DelegateService delegateService;
 
-            if ("assignment".equals(eventName)) {
-                List<Map<String, Object>> list = jdbcTemplate
-                        .queryForList(SQL_GET_DELEGATE_INFO);
+	@Override
+	public void onAssignment(DelegateTask delegateTask) throws Exception {
+		String assignee = delegateTask.getAssignee();
+		String processDefinitionId = delegateTask.getProcessDefinitionId();
+		DelegateInfo delegateInfo = delegateService.getDelegateInfo(assignee, processDefinitionId);
 
-                for (Map<String, Object> map : list) {
-                    logger.info("map : {}", map);
+		String attorney = delegateInfo.getAttorney();
+		delegateTask.setAssignee(attorney);
+		delegateService.saveRecord(assignee, attorney, delegateTask.getId());
+	}
 
-                    String assignee = (String) map.get("assignee");
-                    String attorney = (String) map.get("attorney");
-                    String processDefinitionId = (String) map
-                            .get("process_definition_id");
-                    Date startTime = (Date) map.get("start_time");
-                    Date endTime = (Date) map.get("end_time");
-
-                    if (timeNotBetweenNow(startTime, endTime)) {
-                        logger.info("timeNotBetweenNow");
-
-                        continue;
-                    }
-
-                    if (!assignee.equals(delegateTask.getAssignee())) {
-                        logger.info("assignee : " + assignee
-                                + ", delegateTask.getAssignee() : "
-                                + delegateTask.getAssignee());
-
-                        continue;
-                    }
-
-                    if ((processDefinitionId == null)
-                            || processDefinitionId.equals(delegateTask
-                                    .getProcessDefinitionId())) {
-                        logger
-                                .info("delegate {} to {}", delegateTask,
-                                        attorney);
-                        delegateTask.setAssignee(attorney);
-                        jdbcTemplate.update(SQL_SET_DELEGATE_INFO, assignee,
-                                attorney, delegateTask.getId());
-                    }
-                }
-            }
-        } catch (Exception ex) {
-			logger.error(ex.getMessage(), ex);
-        }
-    }
-
-    private boolean timeNotBetweenNow(Date startTime, Date endTime) {
-        if ((startTime == null) && (endTime == null)) {
-            return false;
-        }
-
-        Date now = new Date();
-
-        return now.before(startTime) || now.after(endTime);
-    }
+	@Resource
+	public void setDelegateService(DelegateService delegateService) {
+		this.delegateService = delegateService;
+	}
 }

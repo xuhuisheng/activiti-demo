@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import javax.annotation.Resource;
 
 import org.activiti.engine.IdentityService;
 import org.activiti.engine.delegate.DelegateTask;
@@ -25,6 +26,8 @@ public class DelegateTaskCandidateListener implements TaskListener {
 	private JdbcTemplate jdbcTemplate;
 	@Autowired
 	private IdentityService identityService;
+	@Resource
+	private DelegateService delegateService;
 
 	public void notify(DelegateTask delegateTask) {
 		try {
@@ -56,7 +59,7 @@ public class DelegateTaskCandidateListener implements TaskListener {
 			logger.error(ex.getMessage(), ex);
 		}
 	}
-	
+
 	private void addCandidateUser(DelegateTask delegateTask,String assignee,String attorney){
 		logger.info("自动委托任务,设置候选人: {} to {}", delegateTask, attorney);
 		delegateTask.addCandidateUser(attorney);

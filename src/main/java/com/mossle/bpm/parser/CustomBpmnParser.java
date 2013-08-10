@@ -7,7 +7,6 @@ import org.activiti.engine.impl.bpmn.parser.factory.DefaultActivityBehaviorFacto
 public class CustomBpmnParser extends BpmnParser{
 
 	public void setActivityBehaviorFactory(ActivityBehaviorFactory activityBehaviorFactory) {
-		
 		((DefaultActivityBehaviorFactory)activityBehaviorFactory).setExpressionManager(expressionManager);
 		super.setActivityBehaviorFactory(activityBehaviorFactory);
 	}

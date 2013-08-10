@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 import javax.annotation.Resource;
 
+import com.mossle.bpm.support.DefaultTaskListener;
 import org.activiti.engine.delegate.DelegateTask;
 import org.activiti.engine.delegate.TaskListener;
 import org.slf4j.Logger;

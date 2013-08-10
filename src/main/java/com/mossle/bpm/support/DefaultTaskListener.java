@@ -1,5 +1,5 @@
 
-package com.mossle.bpm.delegate;
+package com.mossle.bpm.support;
 
 import org.activiti.engine.delegate.DelegateTask;
 import org.activiti.engine.delegate.TaskListener;

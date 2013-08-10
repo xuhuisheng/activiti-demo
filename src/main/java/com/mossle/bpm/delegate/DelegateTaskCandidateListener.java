@@ -6,6 +6,7 @@ import java.util.Map;
 import java.util.Set;
 import javax.annotation.Resource;
 
+import com.mossle.bpm.support.DefaultTaskListener;
 import org.activiti.engine.IdentityService;
 import org.activiti.engine.delegate.DelegateTask;
 import org.activiti.engine.delegate.TaskListener;

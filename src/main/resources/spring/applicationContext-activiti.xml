@@ -56,8 +56,13 @@
             </list>
         </property>
 		-->
+		<!-- //更换id生成策略
+		<property name="idGenerator">
+			<bean class="org.activiti.engine.impl.persistence.StrongUuidGenerator" />
+		</property>
+		-->
 	</bean>
-
+	
 	<bean id="processEngine" class="org.activiti.spring.ProcessEngineFactoryBean">
 		<property name="processEngineConfiguration" ref="processEngineConfiguration"/>
 	</bean>

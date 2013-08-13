@@ -6,6 +6,7 @@ import org.activiti.engine.impl.bpmn.parser.factory.DefaultActivityBehaviorFacto
 
 public class CustomBpmnParser extends BpmnParser{
 
+	//当使用自定义activityBehaviorFactory 时，需要重写该方法
 	public void setActivityBehaviorFactory(ActivityBehaviorFactory activityBehaviorFactory) {
 		((DefaultActivityBehaviorFactory)activityBehaviorFactory).setExpressionManager(expressionManager);
 		super.setActivityBehaviorFactory(activityBehaviorFactory);

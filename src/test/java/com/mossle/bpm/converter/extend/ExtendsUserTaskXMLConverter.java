@@ -1,5 +1,7 @@
 package com.mossle.bpm.converter.extend;
 
+import java.util.List;
+
 import javax.xml.stream.XMLStreamReader;
 import javax.xml.stream.XMLStreamWriter;
 
@@ -8,9 +10,16 @@ import org.activiti.bpmn.converter.util.BpmnXMLUtil;
 import org.activiti.bpmn.model.BaseElement;
 import org.apache.commons.lang.StringUtils;
 
+import com.mossle.bpm.converter.extend.child.TestElementParser;
 import com.mossle.bpm.converter.extend.node.MyUserTask;
 
 public class ExtendsUserTaskXMLConverter extends UserTaskXMLConverter {
+	
+	public ExtendsUserTaskXMLConverter() {
+		
+		TestElementParser parser = new TestElementParser();
+		childElementParsers.put(parser.getElementName(), parser);
+	}
 	
 	public static Class<? extends BaseElement> getBpmnElementType() {
 	    return MyUserTask.class;
@@ -56,5 +65,20 @@ public class ExtendsUserTaskXMLConverter extends UserTaskXMLConverter {
 		// TODO Auto-generated method stub
 		super.writeAdditionalAttributes(element, xtw);
 		xtw.writeAttribute("xuhuisheng", ((MyUserTask)element).getXuhuisheng());
+	}
+	
+	
+	@Override
+	protected void writeExtensionChildElements(BaseElement element, XMLStreamWriter xtw) throws Exception {
+		// TODO Auto-generated method stub
+		super.writeExtensionChildElements(element, xtw);
+		List<String> list = ((MyUserTask)element).getTests();
+		xtw.writeStartElement("tests");
+		for (String string : list) {
+			xtw.writeStartElement("test");
+            xtw.writeCharacters(string);
+            xtw.writeEndElement();
+		}
+		xtw.writeEndElement();
 	}
 }

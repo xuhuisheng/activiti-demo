@@ -42,7 +42,7 @@ public class BpmnConverterTest {
 		BpmnConverterTest t = new BpmnConverterTest();
 		BpmnModel bpmnModel = t.readXMLFile();
 		System.out.println(((MyUserTask)bpmnModel.getFlowElement("taskuser-1")).getXuhuisheng());
-		
+		System.out.println(((MyUserTask)bpmnModel.getFlowElement("taskuser-1")).getTests());
 		t.exportAndReadXMLFile(bpmnModel);
 	}
 }

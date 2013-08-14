@@ -4,6 +4,7 @@ import static org.junit.Assert.assertNotNull;
 
 import java.util.List;
 
+import org.activiti.bpmn.model.BpmnModel;
 import org.activiti.engine.RepositoryService;
 import org.activiti.engine.impl.RepositoryServiceImpl;
 import org.activiti.engine.impl.persistence.entity.DeploymentEntity;
@@ -16,6 +17,9 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
+
+import com.mossle.bpm.converter.cmd.MyGetBpmnModelCmd;
+import com.mossle.bpm.converter.extend.node.MyUserTask;
 
 public class MyTest {
 
@@ -42,6 +46,7 @@ public class MyTest {
 			assertNotNull(activity);
 			System.out.println(activity.getProperty("attribute1"));
 			System.out.println(processDefinitionEntity.findActivity("taskuser-1").getProperty("xuhuisheng"));
+			System.out.println(processDefinitionEntity.findActivity("taskuser-1").getProperty("tests"));
 		}
 		
 	}
@@ -57,13 +62,18 @@ public class MyTest {
 
 		String myAttribute = (String) processDefinition.findActivity("startnone-1").getProperty("attribute1");
 		String xuhuisheng = (String) processDefinition.findActivity("taskuser-1").getProperty("xuhuisheng");
+		List<String> tests = (List<String>) processDefinition.findActivity("taskuser-1").getProperty("tests");
 		assertNotNull(myAttribute);
 		assertNotNull(xuhuisheng);
+		assertNotNull(tests);
 		
 		//通过 repositoryService.getBpmnModel(processDefinitionId) 获取的是默认的无扩展的bpmnModel
 		//TODO 以下是通过cmd获取自定义扩展的bpmnModel
-//		BpmnModel bpmnModel = ((RepositoryServiceImpl)repositoryService).getCommandExecutor()
-//				.execute(new MyGetBpmnModelCmd(processDefinition.getId()));
+		BpmnModel bpmnModel = ((RepositoryServiceImpl)repositoryService).getCommandExecutor()
+				.execute(new MyGetBpmnModelCmd(processDefinition.getId()));
+		
+		System.out.println("bpmnModel:"+((MyUserTask)bpmnModel.getFlowElement("taskuser-1")).getXuhuisheng());
+		System.out.println("bpmnModel:"+((MyUserTask)bpmnModel.getFlowElement("taskuser-1")).getTests());
 	}
 
 

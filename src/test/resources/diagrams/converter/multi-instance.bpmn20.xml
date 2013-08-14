@@ -25,6 +25,10 @@
     </extensionElements>
   </sequenceFlow>
   <userTask id='taskuser-1' name='会签' xuhuisheng="临远">
+  	<testElements>
+  		<test>ffwwwwwwwwwwwwwwwww</test>
+  		<test>ddddddddddddddddddddddd</test>
+  	</testElements>
     <extensionElements>
       <activiti:executionListener class="com.mossle.bpm.listener.MultiInstanceTest$MultiInstanceExecutionListener" event="start" />
       <activiti:taskListener class="com.mossle.bpm.listener.MultiInstanceTest$MultiInstanceTaskListener" event="create" />

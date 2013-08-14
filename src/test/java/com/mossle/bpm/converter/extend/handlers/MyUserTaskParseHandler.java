@@ -24,6 +24,7 @@ public class MyUserTaskParseHandler extends UserTaskParseHandler {
 	public ActivityImpl createActivityOnScope(BpmnParse bpmnParse, FlowElement flowElement, String xmlLocalName, ScopeImpl scopeElement) {
 		ActivityImpl activityImpl =  super.createActivityOnScope(bpmnParse, flowElement, xmlLocalName, scopeElement);
 		activityImpl.setProperty("xuhuisheng", ((MyUserTask)flowElement).getXuhuisheng());
+		activityImpl.setProperty("tests", ((MyUserTask)flowElement).getTests());
 		return activityImpl;
 	}
 }

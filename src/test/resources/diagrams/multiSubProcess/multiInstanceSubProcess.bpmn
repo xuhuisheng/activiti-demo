@@ -37,7 +37,13 @@
       </timerEventDefinition>
     </boundaryEvent>
     <endEvent id="endevent3" name="End"></endEvent>
-    <sequenceFlow id="flow12" sourceRef="boundarytimer1" targetRef="endevent3"></sequenceFlow>
+    <sequenceFlow id="flow12" sourceRef="boundarytimer1" targetRef="servicetask1">
+      <extensionElements>
+        <activiti:executionListener event="take" class="com.mossle.bpm.multiSubProcess.listener.TimerOutListener"></activiti:executionListener>
+      </extensionElements>
+    </sequenceFlow>
+    <serviceTask id="servicetask1" name="Service Task" activiti:class="com.mossle.bpm.multiSubProcess.servicetask.ServiceTask1"></serviceTask>
+    <sequenceFlow id="flow13" sourceRef="servicetask1" targetRef="endevent3"></sequenceFlow>
   </process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_myProcess1">
     <bpmndi:BPMNPlane bpmnElement="myProcess1" id="BPMNPlane_myProcess1">
@@ -75,7 +81,10 @@
         <omgdc:Bounds height="30.0" width="30.0" x="668.0" y="140.0"></omgdc:Bounds>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape bpmnElement="endevent3" id="BPMNShape_endevent3">
-        <omgdc:Bounds height="35.0" width="35.0" x="665.0" y="235.0"></omgdc:Bounds>
+        <omgdc:Bounds height="35.0" width="35.0" x="665.0" y="300.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="servicetask1" id="BPMNShape_servicetask1">
+        <omgdc:Bounds height="55.0" width="105.0" x="630.0" y="210.0"></omgdc:Bounds>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge bpmnElement="flow1" id="BPMNEdge_flow1">
         <omgdi:waypoint x="85.0" y="65.0"></omgdi:waypoint>
@@ -111,7 +120,11 @@
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="flow12" id="BPMNEdge_flow12">
         <omgdi:waypoint x="683.0" y="170.0"></omgdi:waypoint>
-        <omgdi:waypoint x="682.0" y="235.0"></omgdi:waypoint>
+        <omgdi:waypoint x="682.0" y="210.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow13" id="BPMNEdge_flow13">
+        <omgdi:waypoint x="682.0" y="265.0"></omgdi:waypoint>
+        <omgdi:waypoint x="682.0" y="300.0"></omgdi:waypoint>
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>

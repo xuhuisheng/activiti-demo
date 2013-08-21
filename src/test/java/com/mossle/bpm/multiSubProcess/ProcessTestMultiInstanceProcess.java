@@ -66,7 +66,7 @@ public class ProcessTestMultiInstanceProcess {
 		
 		tasks = getTasks( processInstance.getProcessInstanceId());
 		
-		
+//		runtimeService.suspendProcessInstanceById(processInstance.getProcessInstanceId());
 		// 测试等待11秒
 		logger.info("等..........");
 		try { Thread.sleep ( nrOfMinutes * 1000) ; 

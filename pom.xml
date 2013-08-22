@@ -13,10 +13,6 @@
 			<id>Activiti</id>
 			<url>http://maven.alfresco.com/nexus/content/repositories/activiti</url>
 		</repository>
-		<repository>
-			<id>kafeitu</id>
-			<url>http://maven.kafeitu.me/nexus/content/groups/public</url>
-		</repository>
 	</repositories>
 	<dependencies>
 		<!-- 用于测试 -->

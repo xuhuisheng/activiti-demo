@@ -6,5 +6,10 @@
 
 	<bean id="processEngineConfiguration" class="org.activiti.engine.impl.cfg.StandaloneInMemProcessEngineConfiguration">
 		<property name="databaseSchemaUpdate" value="true"/>
+		<property name="customFormTypes">
+            <list>
+                <bean class="com.mossle.bpm.support.UsersFormType"/>
+            </list>
+        </property>
 	</bean>
 </beans>

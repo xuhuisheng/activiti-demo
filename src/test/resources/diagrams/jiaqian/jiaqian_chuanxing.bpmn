@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:activiti="http://activiti.org/bpmn" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" typeLanguage="http://www.w3.org/2001/XMLSchema" expressionLanguage="http://www.w3.org/1999/XPath" targetNamespace="http://www.mossle.com">
+  <process id="jiaqian_chuanxing" name="会签" isExecutable="true">
+    <startEvent id="startnone-1" name="startnone-1" activiti:initiator="initiator"></startEvent>
+    <sequenceFlow id="transition-1" sourceRef="startnone-1" targetRef="taskuser-1"></sequenceFlow>
+    <userTask id="taskuser-1" name="会签" activiti:assignee="${countersignUser}">
+      <multiInstanceLoopCharacteristics isSequential="true" activiti:collection="${countersignUsers}" activiti:elementVariable="countersignUser"></multiInstanceLoopCharacteristics>
+    </userTask>
+    <sequenceFlow id="transition-2" sourceRef="taskuser-1" targetRef="endnone-1">
+      <extensionElements>
+        <activiti:executionListener event="take" class="com.mossle.bpm.jiaqian.JiaqianTest$JiaqianOverListener"></activiti:executionListener>
+      </extensionElements>
+    </sequenceFlow>
+    <endEvent id="endnone-1" name="endnone-1"></endEvent>
+  </process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_jiaqian">
+    <bpmndi:BPMNPlane bpmnElement="jiaqian" id="BPMNPlane_jiaqian">
+      <bpmndi:BPMNShape bpmnElement="startnone-1" id="BPMNShape_startnone-1">
+        <omgdc:Bounds height="40.0" width="40.0" x="15.0" y="35.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="taskuser-1" id="BPMNShape_taskuser-1">
+        <omgdc:Bounds height="80.0" width="120.0" x="85.0" y="15.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="endnone-1" id="BPMNShape_endnone-1">
+        <omgdc:Bounds height="40.0" width="40.0" x="235.0" y="35.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge bpmnElement="transition-1" id="BPMNEdge_transition-1">
+        <omgdi:waypoint x="55.0" y="55.0"></omgdi:waypoint>
+        <omgdi:waypoint x="85.0" y="55.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="transition-2" id="BPMNEdge_transition-2">
+        <omgdi:waypoint x="205.0" y="55.0"></omgdi:waypoint>
+        <omgdi:waypoint x="235.0" y="55.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</definitions>

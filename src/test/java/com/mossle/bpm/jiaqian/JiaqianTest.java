@@ -3,6 +3,7 @@ package com.mossle.bpm.jiaqian;
 import static org.junit.Assert.assertNotNull;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -24,10 +25,12 @@ import org.activiti.engine.runtime.Execution;
 import org.activiti.engine.task.Task;
 import org.activiti.engine.test.ActivitiRule;
 import org.activiti.engine.test.Deployment;
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.transaction.annotation.Transactional;
 
 public class JiaqianTest {
 	
@@ -39,13 +42,13 @@ public class JiaqianTest {
 	private String processInstanceId;
 	private RuntimeService runtimeService;
 	private TaskService taskService;
-
-	@Deployment(resources="diagrams/jiaqian/jiaqian.bpmn")
-	@Test
-	public void startProcess() throws Exception {
+	private Map<String, Object> variableMap;
+	
+	@Before
+	public void startProcess(){
 		runtimeService = activitiRule.getRuntimeService();
 		taskService = activitiRule.getTaskService();
-		Map<String, Object> variableMap = new HashMap<String, Object>();
+		variableMap = new HashMap<String, Object>();
 		
 		List<String> countersignUsers = new ArrayList<String>();
 		countersignUsers.add("kermit");
@@ -55,6 +58,13 @@ public class JiaqianTest {
 		countersignUsers.add("aobama");
 		
 		variableMap.put("countersignUsers", countersignUsers);
+	}
+
+	
+	@Test
+	@Deployment(resources="diagrams/jiaqian/jiaqian.bpmn")
+	public void testBingxing() throws Exception {
+
 		processInstanceId = runtimeService.startProcessInstanceByKey("jiaqian", variableMap).getProcessInstanceId();
 		assertNotNull(processInstanceId);
 		
@@ -78,17 +88,52 @@ public class JiaqianTest {
 		completeTask("duora");
 		
 		//开始加签
-		addMultiInstance("taskuser-1", "xuhuisheng", parentExecutionId,"countersignUser");
-		
+		addParallelMultiInstance("taskuser-1", "xuhuisheng", parentExecutionId,"countersignUser");
 		logTasks();
+		
 		completeTask("aobama");
 		
+		completeTask("xuhuisheng");
 		
-//		completeTask("xuhuisheng");
 		
 		
 	}
 	
+	@Test
+	@Deployment(resources="diagrams/jiaqian/jiaqian_chuanxing.bpmn")
+	public void testChuanxing(){
+
+		processInstanceId = runtimeService.startProcessInstanceByKey("jiaqian_chuanxing", variableMap).getProcessInstanceId();
+		assertNotNull(processInstanceId);
+		
+		log.info("processInstanceId : {}",processInstanceId);
+		
+		List<Execution> executions = runtimeService.createExecutionQuery().activityId("taskuser-1").list();
+		assertNotNull(executions);
+		String parentExecutionId =null;
+		if(executions.size()==1){//串行多实例
+			parentExecutionId = executions.get(0).getId();
+		}
+		
+		
+		logTasks();
+		
+		
+		completeTask("kermit");
+		completeTask("maike");
+		completeTask("buchi");
+		completeTask("duora");
+		
+		//开始加签
+		addSequentialMultiInstance("taskuser-1", "xuhuisheng", parentExecutionId, "countersignUsers");
+//		addSequentialMultiInstance("taskuser-1", "xuhuisheng1", parentExecutionId, "countersignUsers");
+		logTasks();
+		
+		completeTask("aobama");
+		
+		completeTask("xuhuisheng");
+//		completeTask("xuhuisheng1");
+	}
 	private void logTasks(){
 		List<Task> tasks = taskService.createTaskQuery().processInstanceId(processInstanceId).list();
 		assertNotNull(tasks);
@@ -98,7 +143,7 @@ public class JiaqianTest {
 		}
 	}
 	
-	public void addMultiInstance(final String actvityId,final String assignee,final String parentExecutionId,final String collectionElementVariable){
+	private void addParallelMultiInstance(final String actvityId,final String assignee,final String parentExecutionId,final String collectionElementVariable){
 		((ServiceImpl)runtimeService).getCommandExecutor().execute(new Command<Object>() {
 			public Object execute(CommandContext commandContext) {
 				ExecutionEntity parentExecutionEntity = commandContext.getExecutionEntityManager().findExecutionById(parentExecutionId);
@@ -108,8 +153,7 @@ public class JiaqianTest {
 				execution.setScope(false);
 				
 				setLoopVariable(parentExecutionEntity, "nrOfInstances", (Integer)parentExecutionEntity.getVariableLocal("nrOfInstances")+1);
-			    setLoopVariable(parentExecutionEntity, "nrOfActiveInstances", (Integer)parentExecutionEntity.getVariableLocal("nrOfActiveInstances")+1);
-				
+				setLoopVariable(parentExecutionEntity, "nrOfActiveInstances", (Integer)parentExecutionEntity.getVariableLocal("nrOfActiveInstances")+1);
 				setLoopVariable(execution, "loopCounter", parentExecutionEntity.getExecutions().size()+1);
 				setLoopVariable(execution, collectionElementVariable, assignee);
 				
@@ -122,6 +166,21 @@ public class JiaqianTest {
 			}
 		});
 	}
+	
+	//串行请注意complete 顺序. 因为实例按照定义的collectionVariable变量的顺序生成.同一时刻只能有一个实例
+	private void addSequentialMultiInstance(final String actvityId,final String assignee,final String executionId,final String collectionVariable){
+		((ServiceImpl)runtimeService).getCommandExecutor().execute(new Command<Object>() {
+			public Object execute(CommandContext commandContext) {
+				ExecutionEntity execution = commandContext.getExecutionEntityManager().findExecutionById(executionId);
+				Collection<String> col = (Collection<String>)execution.getVariable(collectionVariable);
+				col.add(assignee);
+				execution.setVariable(collectionVariable, col);
+				setLoopVariable(execution, "nrOfInstances", (Integer)execution.getVariableLocal("nrOfInstances")+1);
+				return null;
+			}
+		});
+	}
+	
 	
 	 protected void setLoopVariable(ActivityExecution execution, String variableName, Object value) {
 		    execution.setVariableLocal(variableName, value);

@@ -81,8 +81,7 @@ public class JiaqianTest {
 		addMultiInstance("taskuser-1", "xuhuisheng", parentExecutionId,"countersignUser");
 		
 		logTasks();
-		
-//		completeTask("aobama");
+		completeTask("aobama");
 		
 		
 //		completeTask("xuhuisheng");
@@ -107,6 +106,10 @@ public class JiaqianTest {
 				execution.setActive(true);
 				execution.setConcurrent(true);
 				execution.setScope(false);
+				
+				setLoopVariable(parentExecutionEntity, "nrOfInstances", (Integer)parentExecutionEntity.getVariableLocal("nrOfInstances")+1);
+			    setLoopVariable(parentExecutionEntity, "nrOfActiveInstances", (Integer)parentExecutionEntity.getVariableLocal("nrOfActiveInstances")+1);
+				
 				setLoopVariable(execution, "loopCounter", parentExecutionEntity.getExecutions().size()+1);
 				setLoopVariable(execution, collectionElementVariable, assignee);
 				

@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:activiti="http://activiti.org/bpmn" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" typeLanguage="http://www.w3.org/2001/XMLSchema" expressionLanguage="http://www.w3.org/1999/XPath" targetNamespace="http://www.activiti.org/test">
+  <signal id="signalId" name="signalName"></signal>
+  <process id="signal" name="signal">
+    <startEvent id="startevent2" name="Start"></startEvent>
+    <endEvent id="endevent2" name="End"></endEvent>
+    <userTask id="usertask1" name="User Task" activiti:assignee="admin"></userTask>
+    <sequenceFlow id="flow1" name="" sourceRef="startevent2" targetRef="usertask1"></sequenceFlow>
+    <sequenceFlow id="flow2" name="" sourceRef="usertask1" targetRef="parallelgateway1"></sequenceFlow>
+    <parallelGateway id="parallelgateway1" name="Exclusive Gateway"></parallelGateway>
+    <userTask id="usertask2" name="User Task" activiti:assignee="admin"></userTask>
+    <sequenceFlow id="flow3" name="" sourceRef="parallelgateway1" targetRef="usertask2"></sequenceFlow>
+    <intermediateThrowEvent id="signalintermediatethrowevent1" name="SignalThrowEvent">
+      <signalEventDefinition signalRef="signalId"></signalEventDefinition>
+    </intermediateThrowEvent>
+    <sequenceFlow id="flow4" name="" sourceRef="usertask2" targetRef="signalintermediatethrowevent1"></sequenceFlow>
+    <sequenceFlow id="flow5" name="" sourceRef="signalintermediatethrowevent1" targetRef="parallelgateway2"></sequenceFlow>
+    <intermediateCatchEvent id="signalintermediatecatchevent1" name="SignalCatchEvent">
+      <signalEventDefinition signalRef="signalId"></signalEventDefinition>
+    </intermediateCatchEvent>
+    <sequenceFlow id="flow6" name="" sourceRef="parallelgateway1" targetRef="signalintermediatecatchevent1"></sequenceFlow>
+    <sequenceFlow id="flow7" name="" sourceRef="signalintermediatecatchevent1" targetRef="parallelgateway2"></sequenceFlow>
+    <parallelGateway id="parallelgateway2" name="Parallel Gateway"></parallelGateway>
+    <sequenceFlow id="flow8" name="" sourceRef="parallelgateway2" targetRef="endevent2"></sequenceFlow>
+  </process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_signal">
+    <bpmndi:BPMNPlane bpmnElement="signal" id="BPMNPlane_signal">
+      <bpmndi:BPMNShape bpmnElement="startevent2" id="BPMNShape_startevent2">
+        <omgdc:Bounds height="35" width="35" x="58" y="181"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="endevent2" id="BPMNShape_endevent2">
+        <omgdc:Bounds height="35" width="35" x="730" y="181"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="usertask1" id="BPMNShape_usertask1">
+        <omgdc:Bounds height="55" width="105" x="138" y="171"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="parallelgateway1" id="BPMNShape_parallelgateway1">
+        <omgdc:Bounds height="40" width="40" x="298" y="178"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="usertask2" id="BPMNShape_usertask2">
+        <omgdc:Bounds height="55" width="105" x="370" y="80"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="signalintermediatethrowevent1" id="BPMNShape_signalintermediatethrowevent1">
+        <omgdc:Bounds height="35" width="35" x="546" y="90"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="signalintermediatecatchevent1" id="BPMNShape_signalintermediatecatchevent1">
+        <omgdc:Bounds height="35" width="35" x="405" y="260"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="parallelgateway2" id="BPMNShape_parallelgateway2">
+        <omgdc:Bounds height="40" width="40" x="640" y="178"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge bpmnElement="flow1" id="BPMNEdge_flow1">
+        <omgdi:waypoint x="93" y="198"></omgdi:waypoint>
+        <omgdi:waypoint x="138" y="198"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow2" id="BPMNEdge_flow2">
+        <omgdi:waypoint x="243" y="198"></omgdi:waypoint>
+        <omgdi:waypoint x="298" y="198"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow3" id="BPMNEdge_flow3">
+        <omgdi:waypoint x="318" y="178"></omgdi:waypoint>
+        <omgdi:waypoint x="318" y="108"></omgdi:waypoint>
+        <omgdi:waypoint x="370" y="107"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow4" id="BPMNEdge_flow4">
+        <omgdi:waypoint x="475" y="107"></omgdi:waypoint>
+        <omgdi:waypoint x="546" y="107"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow5" id="BPMNEdge_flow5">
+        <omgdi:waypoint x="581" y="107"></omgdi:waypoint>
+        <omgdi:waypoint x="660" y="107"></omgdi:waypoint>
+        <omgdi:waypoint x="660" y="178"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow6" id="BPMNEdge_flow6">
+        <omgdi:waypoint x="318" y="218"></omgdi:waypoint>
+        <omgdi:waypoint x="318" y="277"></omgdi:waypoint>
+        <omgdi:waypoint x="405" y="277"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow7" id="BPMNEdge_flow7">
+        <omgdi:waypoint x="440" y="277"></omgdi:waypoint>
+        <omgdi:waypoint x="660" y="277"></omgdi:waypoint>
+        <omgdi:waypoint x="660" y="218"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow8" id="BPMNEdge_flow8">
+        <omgdi:waypoint x="680" y="198"></omgdi:waypoint>
+        <omgdi:waypoint x="730" y="198"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</definitions>

@@ -1,4 +1,4 @@
-﻿package com.mossle.bpm.jiaqian;
+package com.mossle.bpm.jiaqian;
 
 import static org.junit.Assert.assertNotNull;
 

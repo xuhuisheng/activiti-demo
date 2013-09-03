@@ -111,7 +111,7 @@ public class CountersignCommand implements Command<Object>{
 	 */
 	private void addSequentialInstance(){
 		ExecutionEntity execution = getActivieExecutions().get(0);
-		if (execution.getProcessDefinition().findActivity(activityId).getProperty("type").equals("subProcess")) {
+		if (getActivity().getProperty("type").equals("subProcess")) {
 			if (!execution.isActive() && execution.isEnded() && (execution.getExecutions() == null || execution.getExecutions().size() == 0)) {
 				execution.setActive(true);
 			}

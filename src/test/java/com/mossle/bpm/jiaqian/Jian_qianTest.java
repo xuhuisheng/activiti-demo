@@ -1,4 +1,4 @@
-package com.mossle.bpm.jiaqian;
+﻿package com.mossle.bpm.jiaqian;
 
 import static org.junit.Assert.assertNotNull;
 
@@ -22,9 +22,9 @@ import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class JiaqianTest {
+public class Jian_qianTest {
 	
-	private static Logger log = LoggerFactory.getLogger(JiaqianTest.class);
+	private static Logger log = LoggerFactory.getLogger(Jian_qianTest.class);
 
 	@Rule
 	public ActivitiRule activitiRule = new ActivitiRule("diagrams/multiSubProcess/activiti.cfg.xml");
@@ -44,42 +44,23 @@ public class JiaqianTest {
 		
 		List<String> countersignUsers = new ArrayList<String>();
 		countersignUsers.add("kermit");
-		countersignUsers.add("maike");
-		countersignUsers.add("buchi");
 		countersignUsers.add("duora");
 		countersignUsers.add("aobama");
 		
 		variableMap.put("countersignUsers", countersignUsers);
 	}
 	
-	
-	
 	@Test
 	@Deployment(resources="diagrams/jiaqian/parallel.bpmn20.xml")
 	public void testParallel() throws Exception { //测试并行多实例
-
 		processInstanceId = getStartProcess("parallel");
 		assertNotNull(processInstanceId);
-		
 		log.info("processInstanceId : {}",processInstanceId);
 		
 		logTasks();
-		
-		
-		completeTask("kermit");
-		completeTask("maike");
-		completeTask("buchi");
-		completeTask("duora");
-		
-		//开始加签
-		commandExecutor.execute(new CountersignCommand("add","taskuser-1", "xuhuisheng", processInstanceId,"countersignUsers","countersignUser"));
+		log.info("减签开始 - 移除 aobama");
+		commandExecutor.execute(new CountersignCommand("remove", "taskuser-1", "aobama", processInstanceId, "countersignUsers", "countersignUser"));
 		logTasks();
-		
-		completeTask("aobama");
-		
-		completeTask("xuhuisheng");
-		
-		
 		
 	}
 	
@@ -87,87 +68,42 @@ public class JiaqianTest {
 	@Test
 	@Deployment(resources="diagrams/jiaqian/parallel_subprocess.bpmn20.xml")
 	public void testParallel_subprocess() throws Exception {//测试并行子流程多实例
-
 		processInstanceId = getStartProcess("parallel_subprocess");
 		assertNotNull(processInstanceId);
-		
 		log.info("processInstanceId : {}",processInstanceId);
 		
 		logTasks();
-		
-		
-		completeTask("kermit");
-		completeTask("maike");
-		completeTask("buchi");
-		completeTask("duora");
-		
-		//开始加签
-		commandExecutor.execute(new CountersignCommand("add","subprocess1", "xuhuisheng", processInstanceId,"countersignUsers","countersignUser"));
+		log.info("减签开始 - 移除 duora");
+		commandExecutor.execute(new CountersignCommand("remove","subprocess1", "duora", processInstanceId,"countersignUsers","countersignUser"));
 		logTasks();
 		
-		completeTask("aobama");
-		
-		completeTask("xuhuisheng");
-		
 	}
-	
-	
 	
 	@Test
 	@Deployment(resources="diagrams/jiaqian/sequential.bpmn20.xml")
 	public void testSequential(){//测试串行多实例
-
 		processInstanceId = getStartProcess("sequential");
 		assertNotNull(processInstanceId);
-		
 		log.info("processInstanceId : {}",processInstanceId);
 		
-		
-		logTasks();
-		
-		
-		completeTask("kermit");
-		completeTask("maike");
-		completeTask("buchi");
-		completeTask("duora");
-		
-		//开始加签
-		commandExecutor.execute(new CountersignCommand("add","taskuser-1", "xuhuisheng", processInstanceId,"countersignUsers","countersignUser"));
-		logTasks();
-		
-		completeTask("aobama");
-		
-		completeTask("xuhuisheng");
+		log.info("捡钱开始 - 移除 duora");
+		commandExecutor.execute(new CountersignCommand("remove","taskuser-1", "duora", processInstanceId,"countersignUsers","countersignUser"));
 	}
 	
 	
 	@Test
 	@Deployment(resources="diagrams/jiaqian/sequential_subprocess.bpmn20.xml")
 	public void testSequential_subprocess(){//测试串行子流程多实例
-
 		processInstanceId = getStartProcess("sequential_subprocess");
 		assertNotNull(processInstanceId);
-		
 		log.info("processInstanceId : {}",processInstanceId);
 		
+		log.info("捡钱开始 - 移除 duora");
+		commandExecutor.execute(new CountersignCommand("remove","subprocess1", "duora", processInstanceId,"countersignUsers","countersignUser"));
 		
-		logTasks();
-		
-		
-		completeTask("kermit");
-		completeTask("maike");
-		completeTask("buchi");
-		completeTask("duora");
-		
-		//开始加签
-		commandExecutor.execute(new CountersignCommand("add","subprocess1", "xuhuisheng", processInstanceId,"countersignUsers","countersignUser"));
-		logTasks();
-		
-		completeTask("aobama");
-		
-		completeTask("xuhuisheng");
 	}
 	
+
 	
 	private String getStartProcess(String key){
 		return runtimeService.startProcessInstanceByKey(key, variableMap).getProcessInstanceId();
@@ -177,9 +113,7 @@ public class JiaqianTest {
 		List<Task> tasks = taskService.createTaskQuery().processInstanceId(processInstanceId).list();
 		assertNotNull(tasks);
 		log.info("--------------------------------------------------------");
-		for (Task task : tasks) {
-			log.info("taskID:{} assignee:{}",task.getId(),task.getAssignee());
-		}
+		log.info("{}",tasks);
 	}
 	
 	

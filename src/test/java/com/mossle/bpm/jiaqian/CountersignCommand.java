@@ -194,6 +194,9 @@ public class CountersignCommand implements Command<Object>{
 		return this.getProcessDefinition().findActivity(activityId);
 	}
 	
+	/**
+	 * <li> 判断节点多实例类型是否是并发
+	 */
 	protected boolean isParallel(){
 		if(getActivity().getProperty("multiInstance").equals("parallel")){
 			return true;

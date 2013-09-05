@@ -65,7 +65,7 @@ public class WorkspaceAction extends BaseAction {
 	 */
 	public String listProcessDefinitions() {
 		RepositoryService repositoryService = processEngine.getRepositoryService();
-		processDefinitions = repositoryService.createProcessDefinitionQuery().list();
+		processDefinitions = repositoryService.createProcessDefinitionQuery().active().list();
 
 		return "listProcessDefinitions";
 	}
@@ -169,7 +169,7 @@ public class WorkspaceAction extends BaseAction {
 	public String listPersonalTasks() {
 		TaskService taskService = processEngine.getTaskService();
 		String username = SpringSecurityUtils.getCurrentUsername();
-		tasks = taskService.createTaskQuery().taskAssignee(username).list();
+		tasks = taskService.createTaskQuery().taskAssignee(username).active().list();
 
 		return "listPersonalTasks";
 	}
@@ -182,7 +182,7 @@ public class WorkspaceAction extends BaseAction {
 	public String listGroupTasks() {
 		TaskService taskService = processEngine.getTaskService();
 		String username = SpringSecurityUtils.getCurrentUsername();
-		tasks = taskService.createTaskQuery().taskCandidateUser(username).list();
+		tasks = taskService.createTaskQuery().taskCandidateUser(username).active().list();
 
 		return "listGroupTasks";
 	}

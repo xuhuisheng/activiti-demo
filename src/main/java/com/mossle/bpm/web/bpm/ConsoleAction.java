@@ -112,7 +112,7 @@ public class ConsoleAction extends BaseAction {
 
 	public String suspendProcessDefinition() {
 		RepositoryService repositoryService = processEngine.getRepositoryService();
-		repositoryService.suspendProcessDefinitionById(processDefinitionId);
+		repositoryService.suspendProcessDefinitionById(processDefinitionId, true, null);
 
 		return RELOAD_PROCESS_DEFINITION;
 	}
@@ -120,7 +120,7 @@ public class ConsoleAction extends BaseAction {
 	public String activeProcessDefinition() {
 		RepositoryService repositoryService = processEngine.getRepositoryService();
 
-		repositoryService.activateProcessDefinitionById(processDefinitionId);
+		repositoryService.activateProcessDefinitionById(processDefinitionId, true, null);
 
 		return RELOAD_PROCESS_DEFINITION;
 	}

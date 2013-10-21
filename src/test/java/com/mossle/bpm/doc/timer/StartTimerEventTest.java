@@ -150,8 +150,7 @@ public class StartTimerEventTest {
 
 	private void cleanDB() {
 		String jobId = managementService.createJobQuery().singleResult().getId();
-		CommandExecutor commandExecutor = processEngineConfiguration.getCommandExecutorTxRequired();
-		commandExecutor.execute(new DeleteJobsCmd(jobId));
+		managementService.executeCommand(new DeleteJobsCmd(jobId));
 	}
 
 	private void moveByMinutes(int minutes) {

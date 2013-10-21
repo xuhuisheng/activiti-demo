@@ -48,15 +48,12 @@ import org.activiti.engine.impl.context.Context;
 public class ProcessDefinitionTest {
     @Resource
     private RepositoryService repositoryService;
-	@Resource
-	private CommandExecutor commandExecutor;
     @Test
 	public void testDefault() {
 		List<ProcessDefinition> processDefinitions = repositoryService.createProcessDefinitionQuery().list();
 		System.out.println("processDefinitions : " + processDefinitions);
 		for (ProcessDefinition processDefinition : processDefinitions) {
 			System.out.println("processDefinition : " + processDefinition);
-			// ProcessDefinitionEntity pdef = commandExecutor.execute(new GetProcessDefinitionCmd(processDefinition.getId()));
 			ProcessDefinitionEntity pdef = (ProcessDefinitionEntity)
 				((RepositoryServiceImpl) repositoryService).getDeployedProcessDefinition(processDefinition.getId());
 			List<ActivityImpl> activities = pdef.getActivities();

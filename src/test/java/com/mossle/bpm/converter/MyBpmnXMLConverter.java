@@ -19,7 +19,7 @@ public class MyBpmnXMLConverter extends BpmnXMLConverter {
 		//...
 	}
 	
-	private static void addConverter(String elementName, Class<? extends BaseElement> elementClass, Class<? extends BaseBpmnXMLConverter> converter) {
+	public static void addConverter(String elementName, Class<? extends BaseElement> elementClass, Class<? extends BaseBpmnXMLConverter> converter) {
 		convertersToBpmnMap.put(elementName, converter);
 		convertersToXMLMap.put(elementClass, converter);
 	}

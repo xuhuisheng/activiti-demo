@@ -52,7 +52,7 @@ public class TerminateEndEventTest {
 		ProcessDefinition processDefinition = findProcessDefinitionByDeploymentId();// 查询最新的流程定义
 		assertNotNull(processDefinition);
 
-		String requestUserId = "admin";
+		String requestUserId = "user";
 		identityService.setAuthenticatedUserId(requestUserId);
 		ProcessInstance processInstance = runtimeService.startProcessInstanceByKey(processDefinition.getKey());
 		assertNotNull(processInstance);

@@ -63,8 +63,8 @@ public class MultiInstanceTest {
 		String requestUserId = "admin";
 		identityService.setAuthenticatedUserId(requestUserId);
 		List countersignUsers = new ArrayList();
-		countersignUsers.add("admin");
-		countersignUsers.add("user");
+		countersignUsers.add("user1");
+		countersignUsers.add("user2");
 		Map map = new HashMap();
 		map.put("rate", "100");
 		map.put("countersignUsers", countersignUsers);
@@ -133,8 +133,8 @@ public class MultiInstanceTest {
 				System.out.println("targetActivity : " + targetActivity);
 				if (targetActivity.getProperty("multiInstance") != null) {
 					List countersignUsers = new ArrayList();
-					countersignUsers.add("admin");
-					countersignUsers.add("user");
+					countersignUsers.add("user1");
+					countersignUsers.add("user2");
 					countersignUsers.add("lingo");
 					countersignUsers.add("vivian");
 					delegateExecution.setVariable("countersignUsers", countersignUsers);

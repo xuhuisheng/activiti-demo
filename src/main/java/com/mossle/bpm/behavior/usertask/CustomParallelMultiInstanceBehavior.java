@@ -10,20 +10,20 @@ import org.slf4j.LoggerFactory;
 
 public class CustomParallelMultiInstanceBehavior extends ParallelMultiInstanceBehavior {
 	private static Logger log = LoggerFactory.getLogger(CustomParallelMultiInstanceBehavior.class);
-	
-	
+
+
 	public CustomParallelMultiInstanceBehavior(ActivityImpl activity, AbstractBpmnActivityBehavior originalActivityBehavior) {
 		super(activity, originalActivityBehavior);
 	}
-	
+
 	protected void createInstances(ActivityExecution execution) throws Exception {
-		log.info("创建多实例开始啦: {}  ",execution);
+		log.info("创建多实例开始啦: {}", execution);
 		super.createInstances(execution);
 	}
-	
+
 	public void setCompletionConditionExpression(Expression completionConditionExpression) {
-		log.info("你要表达式做什么用?: {}  ",completionConditionExpression.getExpressionText());
+		log.info("你要表达式做什么用?: {}", completionConditionExpression.getExpressionText());
 		super.setCompletionConditionExpression(completionConditionExpression);
 	}
-	
+
 }

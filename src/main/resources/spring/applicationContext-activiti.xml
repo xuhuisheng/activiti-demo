@@ -15,10 +15,18 @@
 
  		<property name="customDefaultBpmnParseHandlers">
     	 	<list>
-    	 		<bean class="com.mossle.bpm.delegate.DelegateBPMNParserHandler"/>
+				<bean class="com.mossle.bpm.handler.ProxyUserTaskBPMNParserHandler">
+					<property name="bpmnParseHandlers">
+						<list>
+							<bean class="org.activiti.engine.impl.bpmn.parser.handler.UserTaskParseHandler"/>
+							<bean class="com.mossle.bpm.auto.AutoCompleteTaskBPMNParserHandler"/>
+							<bean class="com.mossle.bpm.delegate.DelegateBPMNParserHandler"/>
+						</list>
+					</property>
+				</bean>
     	 	</list>
     	 </property>
-    	 
+
     	 <!-- 自定义元素执行行为 -->
 		<property name="activityBehaviorFactory">
 			<bean class="com.mossle.bpm.behavior.CustomActivityBehaviorFactory" />
@@ -26,8 +34,8 @@
 		<property name="bpmnParser">
 			<bean class="com.mossle.bpm.parser.CustomBpmnParser" />
 		</property>
-    	 
-    	 
+
+
 		<property name="transactionManager" ref="transactionManager"/>
 		<!-- (databaseType 不用修改,即使连接其他类型数据库)  act引擎会自动替换成相应的type,这里加上是因为act不识别hsqldb类型,故直接映射成H2-->
 		<property name="databaseType" value="h2"/>
@@ -62,7 +70,7 @@
 		</property>
 		-->
 	</bean>
-	
+
 	<bean id="processEngine" class="org.activiti.spring.ProcessEngineFactoryBean">
 		<property name="processEngineConfiguration" ref="processEngineConfiguration"/>
 	</bean>

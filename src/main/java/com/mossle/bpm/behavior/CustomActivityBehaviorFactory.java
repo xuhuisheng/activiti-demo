@@ -15,16 +15,18 @@ import com.mossle.bpm.behavior.usertask.CustomUserTaskActivityBehavior;
 
 public class CustomActivityBehaviorFactory extends DefaultActivityBehaviorFactory {
 	private static Logger log = LoggerFactory.getLogger(CustomUserTaskActivityBehavior.class);
-	
+
 	//test
 	public UserTaskActivityBehavior createUserTaskActivityBehavior(UserTask userTask, TaskDefinition taskDefinition) {
-		log.info("change usertask Behavior : {}  ",userTask);
+		log.info("change usertask Behavior : {}", userTask);
 		return new CustomUserTaskActivityBehavior(taskDefinition);
 	}
+
 	//test multiInstance
 	public ParallelMultiInstanceBehavior createParallelMultiInstanceBehavior(ActivityImpl activity, AbstractBpmnActivityBehavior innerActivityBehavior) {
 		return new CustomParallelMultiInstanceBehavior(activity, innerActivityBehavior);
 	}
+
 	// 同样可以覆盖别的方法,加入其他元素的自定义行为,参考 @see ActivityBehaviorFactory
 	// 该类控制执行到某一元素时触发
 }

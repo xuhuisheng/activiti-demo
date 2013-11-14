@@ -70,8 +70,13 @@ public class HistoryProcessInstanceDiagramCmd implements Command<InputStream> {
                     .getExecutionEntityManager();
             ExecutionEntity executionEntity = executionEntityManager
                     .findExecutionById(processInstanceId);
+			List<String> activityIds;
+			if (executionEntity == null) {
+	            activityIds = executionEntity.findActiveActivityIds();
+			} else {
+				activityIds = Collections.EMPTY_LIST;
+			}
 
-            List<String> activityIds = executionEntity.findActiveActivityIds();
 
             return activityIds;
         } else {

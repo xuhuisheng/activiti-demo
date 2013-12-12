@@ -22,7 +22,6 @@ import org.activiti.engine.history.HistoricTaskInstance;
 import org.activiti.engine.history.HistoricVariableInstance;
 import org.activiti.engine.impl.ServiceImpl;
 import org.activiti.engine.impl.interceptor.Command;
-import org.activiti.engine.impl.interceptor.CommandExecutor;
 import org.activiti.engine.repository.ProcessDefinition;
 import org.activiti.engine.task.DelegationState;
 import org.activiti.engine.task.Task;
@@ -56,11 +55,10 @@ public class WorkspaceAction extends BaseAction {
 	private List<HistoricProcessInstance> historicProcessInstances;
 	private List<HistoricVariableInstance> historicVariableInstances;
 	private String username;
-	private CommandExecutor commandExecutor;
 
 	/**
 	 * 流程列表（所有的流程定义即流程模型）
-	 * 
+	 *
 	 * @return
 	 */
 	public String listProcessDefinitions() {
@@ -72,7 +70,7 @@ public class WorkspaceAction extends BaseAction {
 
 	/**
 	 * 用户发起的流程（包含已经完成和未完成）
-	 * 
+	 *
 	 * @return
 	 */
 	public String listRunningProcessInstances() {
@@ -87,7 +85,7 @@ public class WorkspaceAction extends BaseAction {
 
 	/**
 	 * 用户参与的流程（包含已经完成和未完成）
-	 * 
+	 *
 	 * @return
 	 */
 	public String listInvolvedProcessInstances() {
@@ -102,15 +100,13 @@ public class WorkspaceAction extends BaseAction {
 
 	/**
 	 * 查看流程定义的流程图
-	 * 
+	 *
 	 * @throws Exception
 	 */
 	public void graphProcessDefinition() throws Exception {
-		RepositoryService repositoryService = processEngine.getRepositoryService();
-		Command<InputStream> cmd = null;
-		cmd = new ProcessDefinitionDiagramCmd(processDefinitionId);
+		Command<InputStream> cmd = new ProcessDefinitionDiagramCmd(processDefinitionId);
 
-		InputStream is = ((ServiceImpl) repositoryService).getCommandExecutor().execute(cmd);
+		InputStream is = processEngine.getManagementService().executeCommand(cmd);
 		HttpServletResponse response = ServletActionContext.getResponse();
 		response.setContentType("image/png");
 
@@ -141,7 +137,7 @@ public class WorkspaceAction extends BaseAction {
 
 	/**
 	 * 流程跟踪
-	 * 
+	 *
 	 * @throws Exception
 	 */
 	public void graphHistoryProcessInstance() throws Exception {
@@ -163,7 +159,7 @@ public class WorkspaceAction extends BaseAction {
 
 	/**
 	 * 待办任务（个人任务）
-	 * 
+	 *
 	 * @return
 	 */
 	public String listPersonalTasks() {
@@ -176,7 +172,7 @@ public class WorkspaceAction extends BaseAction {
 
 	/**
 	 * 代领任务（组任务）
-	 * 
+	 *
 	 * @return
 	 */
 	public String listGroupTasks() {
@@ -189,7 +185,7 @@ public class WorkspaceAction extends BaseAction {
 
 	/**
 	 * 代理中的任务（代理人还未完成该任务）
-	 * 
+	 *
 	 * @return
 	 */
 	public String listDelegatedTasks() {
@@ -202,7 +198,7 @@ public class WorkspaceAction extends BaseAction {
 
 	/**
 	 * 已办任务（历史任务）
-	 * 
+	 *
 	 * @return
 	 */
 	public String listHistoryTasks() {
@@ -216,7 +212,7 @@ public class WorkspaceAction extends BaseAction {
 	// ~ ======================================================================
 	/**
 	 * 发起流程页面（启动一个流程实例）内置流程表单方式
-	 * 
+	 *
 	 * @return
 	 */
 	public String prepareStartProcessInstance() {
@@ -229,7 +225,7 @@ public class WorkspaceAction extends BaseAction {
 
 	/**
 	 * 发起流程
-	 * 
+	 *
 	 * @return
 	 */
 	public String startProcessInstance() {
@@ -254,7 +250,7 @@ public class WorkspaceAction extends BaseAction {
 	// ~ ======================================================================
 	/**
 	 * 完成任务页面
-	 * 
+	 *
 	 * @return
 	 */
 	public String prepareCompleteTask() {
@@ -269,7 +265,7 @@ public class WorkspaceAction extends BaseAction {
 
 	/**
 	 * 完成任务
-	 * 
+	 *
 	 * @return
 	 */
 	public String completeTask() {
@@ -296,7 +292,7 @@ public class WorkspaceAction extends BaseAction {
 
 	/**
 	 * 认领任务（对应的是在组任务，即从组任务中领取任务）
-	 * 
+	 *
 	 * @return
 	 */
 	public String claimTask() {
@@ -310,7 +306,7 @@ public class WorkspaceAction extends BaseAction {
 
 	/**
 	 * 任务代理页面
-	 * 
+	 *
 	 * @return
 	 */
 	public String prepareDelegateTask() {
@@ -319,7 +315,7 @@ public class WorkspaceAction extends BaseAction {
 
 	/**
 	 * 任务代理
-	 * 
+	 *
 	 * @return
 	 */
 	public String delegateTask() {
@@ -331,7 +327,7 @@ public class WorkspaceAction extends BaseAction {
 
 	/**
 	 * TODO 该方法有用到？
-	 * 
+	 *
 	 * @return
 	 */
 	public String resolveTask() {
@@ -343,7 +339,7 @@ public class WorkspaceAction extends BaseAction {
 
 	/**
 	 * 查看历史【包含流程跟踪、任务列表（完成和未完成）、流程变量】
-	 * 
+	 *
 	 * @return
 	 */
 	public String viewHistory() {
@@ -357,26 +353,26 @@ public class WorkspaceAction extends BaseAction {
 	// ~ ==================================国内特色流程====================================
 	/**
 	 * 回退任务
-	 * 
+	 *
 	 * @return
 	 */
 	public String rollback() {
 		Command<Integer> cmd = new RollbackTaskCmd(taskId);
 
-		commandExecutor.execute(cmd);
+		processEngine.getManagementService().executeCommand(cmd);
 
 		return RELOAD;
 	}
 
 	/**
 	 * 取回任务
-	 * 
+	 *
 	 * @return
 	 */
 	public String withdraw() {
 		Command<Integer> cmd = new WithdrawTaskCmd(taskId);
 
-		commandExecutor.execute(cmd);
+		processEngine.getManagementService().executeCommand(cmd);
 
 		return RELOAD;
 	}
@@ -440,9 +436,5 @@ public class WorkspaceAction extends BaseAction {
 
 	public void setUsername(String username) {
 		this.username = username;
-	}
-
-	public void setCommandExecutor(CommandExecutor commandExecutor) {
-		this.commandExecutor = commandExecutor;
 	}
 }

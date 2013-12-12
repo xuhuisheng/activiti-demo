@@ -19,7 +19,9 @@
 					<property name="bpmnParseHandlers">
 						<list>
 							<bean class="org.activiti.engine.impl.bpmn.parser.handler.UserTaskParseHandler"/>
+							<!--
 							<bean class="com.mossle.bpm.auto.AutoCompleteTaskBPMNParserHandler"/>
+							-->
 							<bean class="com.mossle.bpm.delegate.DelegateBPMNParserHandler"/>
 						</list>
 					</property>

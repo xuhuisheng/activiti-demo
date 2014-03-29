@@ -12,12 +12,12 @@ public class JumpCmd implements Command<Object> {
 	private String processInstanceId;
 	private String jumpOrigin;
 
-	public JumpCmd(String executionId, String activityId) {
-		this(executionId,activityId,"jump");
+	public JumpCmd(String processInstanceId, String activityId) {
+		this(processInstanceId,activityId,"jump");
 	}
-	public JumpCmd(String executionId, String activityId , String jumpOrigin) {
+	public JumpCmd(String processInstanceId, String activityId , String jumpOrigin) {
 		this.activityId = activityId;
-		this.processInstanceId = executionId;
+		this.processInstanceId = processInstanceId;
 		this.jumpOrigin = jumpOrigin;
 	}
 

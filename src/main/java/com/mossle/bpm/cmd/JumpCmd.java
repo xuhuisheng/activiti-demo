@@ -1,20 +1,15 @@
 package com.mossle.bpm.cmd;
 
 
-import java.util.List;
-
 import org.activiti.engine.impl.interceptor.Command;
 import org.activiti.engine.impl.interceptor.CommandContext;
 import org.activiti.engine.impl.persistence.entity.ExecutionEntity;
-import org.activiti.engine.impl.persistence.entity.TaskEntity;
-import org.activiti.engine.impl.pvm.PvmTransition;
 import org.activiti.engine.impl.pvm.process.ActivityImpl;
 import org.activiti.engine.impl.pvm.process.ProcessDefinitionImpl;
-import org.activiti.engine.impl.pvm.process.TransitionImpl;
 
 public class JumpCmd implements Command<Object> {
 	private String activityId;
-	private String executionId;
+	private String processInstanceId;
 	private String jumpOrigin;
 
 	public JumpCmd(String executionId, String activityId) {
@@ -22,16 +17,19 @@ public class JumpCmd implements Command<Object> {
 	}
 	public JumpCmd(String executionId, String activityId , String jumpOrigin) {
 		this.activityId = activityId;
-		this.executionId = executionId;
+		this.processInstanceId = executionId;
 		this.jumpOrigin = jumpOrigin;
 	}
 
 	public Object execute(CommandContext commandContext) {
-		for (TaskEntity taskEntity : commandContext.getTaskEntityManager().findTasksByExecutionId(executionId)) {
-			taskEntity.setVariableLocal("跳转原因", jumpOrigin);
-			commandContext.getTaskEntityManager().deleteTask(taskEntity, jumpOrigin, false);
-		}
-		ExecutionEntity executionEntity = commandContext.getExecutionEntityManager().findExecutionById(executionId);
+        //parent execution
+		ExecutionEntity executionEntity = commandContext.getExecutionEntityManager().findExecutionById(processInstanceId);
+
+	        //1. 删除当前execution的所有子execution
+	        //2. 删除当前execution下的所有task
+	        //3. 删除当前execution下的所有job
+	        executionEntity.destroyScope(jumpOrigin);
+
 		ProcessDefinitionImpl processDefinition = executionEntity.getProcessDefinition();
 		ActivityImpl activity = processDefinition.findActivity(activityId);
 
